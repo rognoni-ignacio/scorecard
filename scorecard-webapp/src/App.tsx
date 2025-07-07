@@ -1,24 +1,35 @@
-import { useState } from "react";
-import "./App.css";
-
 function App() {
-  const [holes, setHoles] = useState<number>(18);
+  const startGame = (holes: number) => {
+    console.log(`Starting game with ${holes} holes`);
+    // TODO: Navigate to scorecard page
+  };
 
   return (
-    <div>
-      <h1>Golf Scorecard</h1>
-      <div>
-        <h2>How many holes are you playing today?</h2>
-
-        <div>
-          <button onClick={() => setHoles(9)}>9 holes</button>
-          <button onClick={() => setHoles(18)}>18 holes</button>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+        <h1 className="text-2xl font-bold text-gray-900 text-center mb-6">
+          Golf Scorecard
+        </h1>
+        <div className="space-y-6">
+          <h2 className="text-lg font-medium text-gray-700 text-center">
+            How many holes are you playing?
+          </h2>
+          <div className="space-y-3">
+            <button
+              onClick={() => startGame(9)}
+              className="w-full py-3 px-4 rounded-lg border-2 font-medium transition-colors bg-blue-500 border-blue-500 text-white hover:bg-blue-600 hover:border-blue-600 cursor-pointer"
+            >
+              Play 9 Holes
+            </button>
+            <button
+              onClick={() => startGame(18)}
+              className="w-full py-3 px-4 rounded-lg border-2 font-medium transition-colors bg-blue-500 border-blue-500 text-white hover:bg-blue-600 hover:border-blue-600 cursor-pointer"
+            >
+              Play 18 Holes
+            </button>
+          </div>
         </div>
-
-        <p>Great! You are playing {holes} holes today.</p>
-
       </div>
-      <button>Start Game</button>
     </div>
   );
 }
