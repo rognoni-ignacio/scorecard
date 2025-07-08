@@ -4,6 +4,7 @@ import { useAppState } from "../context/useAppState";
 export default function Scorecard() {
   const { holes } = useAppState();
   const [strokes, setStrokes] = useState<number[]>(Array(holes ?? 0).fill(0));
+  const totalStrokes = strokes.reduce((sum, s) => sum + s, 0);
 
   const handleStrokesChange = (hole: number, strokes: number) => {
     setStrokes((prev: number[]) =>
@@ -34,6 +35,7 @@ export default function Scorecard() {
           </li>
         ))}
       </ul>
+      <div className="text-right font-bold text-lg">Total: {totalStrokes}</div>
     </div>
   );
 }
