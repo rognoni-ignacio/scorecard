@@ -16,12 +16,17 @@ export default function Scorecard() {
     return <div className="mt-8 text-center">No game in progress.</div>;
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-gray-50 p-2">
-      <div className="mt-4 mb-24 w-full max-w-md rounded-lg bg-white p-4 shadow-lg">
-        <h1 className="mb-6 text-center text-2xl font-bold text-gray-900">
-          Scorecard
-        </h1>
-        <ul className="space-y-3">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-2">
+      <div className="flex h-[90vh] w-full max-w-md flex-col rounded-lg bg-white shadow-lg">
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-10 rounded-t-lg bg-white p-4 shadow">
+          <h1 className="text-center text-2xl font-bold text-gray-900">
+            Scorecard
+          </h1>
+          {/* Future: course and player info here */}
+        </div>
+        {/* Scrollable Holes List */}
+        <ul className="flex-1 space-y-3 overflow-y-auto px-4 py-2">
           {Array.from({ length: holes }).map((_, i) => (
             <li
               key={i}
@@ -42,14 +47,14 @@ export default function Scorecard() {
             </li>
           ))}
         </ul>
-      </div>
-      {/* Sticky total bar at the bottom */}
-      <div className="fixed bottom-0 left-0 w-full border-t border-gray-200 bg-white py-4 shadow-lg">
-        <div className="mx-auto flex max-w-md items-center justify-between px-4">
-          <span className="text-lg font-semibold text-gray-700">Total</span>
-          <span className="text-2xl font-bold text-blue-600">
-            {totalStrokes}
-          </span>
+        {/* Sticky Total Bar */}
+        <div className="sticky bottom-0 z-10 rounded-b-lg bg-white p-4 shadow">
+          <div className="flex items-center justify-between">
+            <span className="text-lg font-semibold text-gray-700">Total</span>
+            <span className="text-2xl font-bold text-blue-600">
+              {totalStrokes}
+            </span>
+          </div>
         </div>
       </div>
     </div>
