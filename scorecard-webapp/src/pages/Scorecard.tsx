@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { useAppState } from "../context/useAppState";
 
 export default function Scorecard() {
   const { holes } = useAppState();
+  const [strokes, setStrokes] = useState<number[]>(Array(holes ?? 0).fill(0));
+
+  const handleStrokesChange = (hole: number, strokes: number) => {
+    setStrokes((prev: number[]) =>
+      prev.map((s, i) => (i === hole ? Math.max(0, strokes) : s))
+    );
+  };
 
   if (!holes)
     return <div className="text-center mt-8">No game in progress.</div>;
@@ -16,7 +24,13 @@ export default function Scorecard() {
             className="flex items-center justify-between bg-white rounded shadow p-3"
           >
             <span className="font-medium text-gray-700">Hole {i + 1}</span>
-            <span className="text-gray-400">[strokes here]</span>
+            <input
+              type="number"
+              min={0}
+              className="w-16 text-center border rounded"
+              value={strokes[i]}
+              onChange={(e) => handleStrokesChange(i, Number(e.target.value))}
+            />
           </li>
         ))}
       </ul>
