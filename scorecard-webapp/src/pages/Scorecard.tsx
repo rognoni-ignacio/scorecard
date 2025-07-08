@@ -37,15 +37,21 @@ export default function Scorecard() {
               </span>
               <div className="flex items-center gap-4">
                 <button
-                  className="w-10 h-10 rounded-full bg-gray-200 text-2xl font-bold flex items-center justify-center"
-                  onClick={() => handleStrokesChange(i, Math.max(0, strokes[i] - 1))}
+                  className="h-10 w-10 rounded-lg bg-gray-200 transition-colors hover:bg-gray-300"
+                  onClick={() =>
+                    handleStrokesChange(i, Math.max(0, strokes[i] - 1))
+                  }
                   disabled={strokes[i] === 0}
-                >-</button>
-                <span className="text-xl w-8 text-center">{strokes[i]}</span>
+                >
+                  -
+                </button>
+                <span>{strokes[i]}</span>
                 <button
-                  className="w-10 h-10 rounded-full bg-blue-500 text-white text-2xl font-bold flex items-center justify-center"
+                  className="h-10 w-10 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600"
                   onClick={() => handleStrokesChange(i, strokes[i] + 1)}
-                >+</button>
+                >
+                  +
+                </button>
               </div>
             </li>
           ))}
