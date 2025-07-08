@@ -36,15 +36,16 @@ export default function Scorecard() {
                 Hole {i + 1}
               </span>
               <div className="flex items-center gap-4">
-                <button
-                  className="h-10 w-10 rounded-lg bg-gray-200 transition-colors hover:bg-gray-300"
-                  onClick={() =>
-                    handleStrokesChange(i, Math.max(0, strokes[i] - 1))
-                  }
-                  disabled={strokes[i] === 0}
-                >
-                  -
-                </button>
+                {strokes[i] > 0 && (
+                  <button
+                    className="h-10 w-10 rounded-lg bg-gray-200 transition-colors hover:bg-gray-300"
+                    onClick={() =>
+                      handleStrokesChange(i, Math.max(0, strokes[i] - 1))
+                    }
+                  >
+                    -
+                  </button>
+                )}
                 <span>{strokes[i]}</span>
                 <button
                   className="h-10 w-10 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600"
