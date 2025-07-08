@@ -35,15 +35,18 @@ export default function Scorecard() {
               <span className="text-lg font-medium text-gray-700">
                 Hole {i + 1}
               </span>
-              <input
-                type="number"
-                min={0}
-                inputMode="numeric"
-                pattern="[0-9]*"
-                className="w-20 rounded-lg border-2 border-gray-300 py-2 text-center text-lg focus:border-blue-400 focus:outline-none"
-                value={strokes[i]}
-                onChange={(e) => handleStrokesChange(i, Number(e.target.value))}
-              />
+              <div className="flex items-center gap-4">
+                <button
+                  className="w-10 h-10 rounded-full bg-gray-200 text-2xl font-bold flex items-center justify-center"
+                  onClick={() => handleStrokesChange(i, Math.max(0, strokes[i] - 1))}
+                  disabled={strokes[i] === 0}
+                >-</button>
+                <span className="text-xl w-8 text-center">{strokes[i]}</span>
+                <button
+                  className="w-10 h-10 rounded-full bg-blue-500 text-white text-2xl font-bold flex items-center justify-center"
+                  onClick={() => handleStrokesChange(i, strokes[i] + 1)}
+                >+</button>
+              </div>
             </li>
           ))}
         </ul>
