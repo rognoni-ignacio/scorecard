@@ -14,8 +14,15 @@ export default function Scorecard() {
     );
   };
 
-  const handleSaveRound = () => {
-    alert("Feature coming soon...");
+  const handleSaveRound = async () => {
+    const url = `${import.meta.env.VITE_API_URL}/test-connection`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      alert(JSON.stringify(data));
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const isRoundComplete = strokes.every((s) => s > 0);
