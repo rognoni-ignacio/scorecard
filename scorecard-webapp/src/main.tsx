@@ -5,12 +5,14 @@ import { AppStateProvider } from "./context/AppStateContext.tsx";
 import "./index.css";
 import App from "./App.tsx";
 
+const basename = import.meta.env.VITE_ROUTER_BASENAME || "/";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter basename="/scorecard">
+    <BrowserRouter basename={basename}>
       <AppStateProvider>
         <App />
       </AppStateProvider>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );
