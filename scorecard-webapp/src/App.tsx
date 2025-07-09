@@ -8,7 +8,7 @@ function App() {
 
   const startGame = (holes: number) => {
     setHoles(holes);
-    navigate(`/scorecard`);
+    navigate(`/play`);
   };
 
   return (
@@ -44,7 +44,7 @@ function App() {
           </div>
         }
       />
-      <Route path="/scorecard" element={<Scorecard />} />
+      <Route path="/play" element={<Scorecard />} />
     </Routes>
   );
 }
