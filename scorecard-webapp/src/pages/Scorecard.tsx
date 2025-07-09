@@ -14,6 +14,10 @@ export default function Scorecard() {
     );
   };
 
+  const handleSaveRound = () => {
+    alert("Feature coming soon...");
+  };
+
   if (!holes)
     return <div className="mt-8 text-center">No game in progress.</div>;
 
@@ -67,12 +71,18 @@ export default function Scorecard() {
         </ul>
         {/* Sticky Total Bar */}
         <div className="sticky bottom-0 z-10 rounded-b-lg bg-white p-4 shadow">
-          <div className="flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between">
             <span className="text-lg font-semibold text-gray-700">Total</span>
             <span className="text-2xl font-bold text-blue-600">
               {totalStrokes}
             </span>
           </div>
+          <button
+            onClick={handleSaveRound}
+            className="w-full rounded-lg bg-blue-500 py-4 text-xl font-bold text-white shadow transition-colors hover:bg-blue-600 active:bg-blue-700"
+          >
+            Save round
+          </button>
         </div>
       </div>
     </div>
