@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useAppState } from "../context/useAppState";
+import { useNavigate } from "react-router-dom";
 
 export default function Scorecard() {
+  const navigate = useNavigate();
   const { holes } = useAppState();
   const [strokes, setStrokes] = useState<number[]>(Array(holes ?? 0).fill(0));
   const totalStrokes = strokes.reduce((sum, s) => sum + s, 0);
@@ -19,11 +21,17 @@ export default function Scorecard() {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-2">
       <div className="flex h-[90vh] w-full max-w-md flex-col rounded-lg bg-white shadow-lg">
         {/* Sticky Header */}
-        <div className="sticky top-0 z-10 rounded-t-lg bg-white p-4 shadow">
-          <h1 className="text-center text-2xl font-bold text-gray-900">
+        <div className="sticky top-0 z-10 flex items-center justify-center rounded-t-lg bg-white p-4 shadow">
+          <button
+            className="absolute left-4 rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300"
+            onClick={() => navigate("/")}
+            aria-label="Back"
+          >
+            ←
+          </button>
+          <h1 className="flex-1 text-center text-2xl font-bold text-gray-900">
             Scorecard
           </h1>
-          {/* Future: course and player info here */}
         </div>
         {/* Scrollable Holes List */}
         <ul className="flex-1 space-y-3 overflow-y-auto px-4 py-2">
