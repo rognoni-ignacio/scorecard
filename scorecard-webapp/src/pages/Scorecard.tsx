@@ -31,12 +31,12 @@ export default function Scorecard() {
     return <div className="mt-8 text-center">No game in progress.</div>;
 
   return (
-    <div className="flex min-h-screen bg-red-500">
+    <div className="flex min-h-screen bg-gray-50">
       <div className="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg">
-        {/* Sticky Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-center rounded-t-lg bg-white p-4 shadow">
+        {/* Header */}
+        <div className="flex flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow">
           <button
-            className="absolute left-4 cursor-pointer rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300"
+            className="rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300"
             onClick={() => navigate("/")}
             aria-label="Back"
           >
@@ -45,8 +45,10 @@ export default function Scorecard() {
           <h1 className="flex-1 text-center text-2xl font-bold text-gray-900">
             Scorecard
           </h1>
+          {/* Empty div to balance the flex layout, same width as the button */}
+          <div className="w-12" />
         </div>
-        {/* Scrollable Holes List */}
+        {/* Scrollable List */}
         <ul className="flex-1 divide-y divide-gray-200 overflow-y-auto px-4 py-2">
           {strokes.map((_, i) => (
             <li key={i} className="flex items-center justify-between py-3">
@@ -75,8 +77,8 @@ export default function Scorecard() {
             </li>
           ))}
         </ul>
-        {/* Sticky Total Bar */}
-        <div className="sticky bottom-0 z-10 rounded-b-lg bg-white p-4 shadow">
+        {/* Footer */}
+        <div className="flex-shrink-0 rounded-b-lg bg-white p-4 shadow">
           <div className="mb-4 flex items-center justify-between">
             <span className="text-lg font-semibold text-gray-700">Total</span>
             <span className="text-2xl font-bold text-blue-600">
