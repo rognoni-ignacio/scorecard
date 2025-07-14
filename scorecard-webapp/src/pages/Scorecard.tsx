@@ -31,7 +31,7 @@ export default function Scorecard() {
     return <div className="mt-8 text-center">No game in progress.</div>;
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-red-500">
       <div className="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg">
         {/* Sticky Header */}
         <div className="sticky top-0 z-10 flex items-center justify-center rounded-t-lg bg-white p-4 shadow">
