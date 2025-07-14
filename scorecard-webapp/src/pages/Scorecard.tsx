@@ -32,7 +32,7 @@ export default function Scorecard() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <div className="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg">
+      <div className="mx-auto flex h-dvh min-h-0 w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg">
         {/* Header */}
         <div className="flex flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow">
           <button
