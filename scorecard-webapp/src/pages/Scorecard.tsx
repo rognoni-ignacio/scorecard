@@ -31,7 +31,7 @@ export default function Scorecard() {
     return <div className="mt-8 text-center">No game in progress.</div>;
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex h-dvh overflow-hidden bg-gray-50">
       <div className="mx-auto flex h-dvh min-h-0 w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg">
         {/* Header */}
         <div className="flex flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow">
@@ -49,7 +49,7 @@ export default function Scorecard() {
           <div className="w-12" />
         </div>
         {/* Scrollable List */}
-        <ul className="flex-1 divide-y divide-gray-200 overflow-y-auto px-4 py-2">
+        <ul className="flex-1 divide-y divide-gray-200 overflow-y-auto overscroll-contain px-4 py-2">
           {strokes.map((_, i) => (
             <li key={i} className="flex items-center justify-between py-3">
               <span className="text-lg font-medium text-gray-700">
