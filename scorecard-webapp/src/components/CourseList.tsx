@@ -1,26 +1,39 @@
-type CourseListProps = {
-  onSelectDemoGolfClub: () => void;
-  onSelectDemoChampionship: () => void;
-};
+import { useEffect, useState } from "react";
+import type { CourseSummary } from "../types/CourseSummary";
 
-export default function CourseList({
-  onSelectDemoGolfClub,
-  onSelectDemoChampionship,
-}: CourseListProps) {
+interface CourseListProps {
+  onSelectCourse: (courseId: number) => void;
+}
+
+export default function CourseList({ onSelectCourse }: CourseListProps) {
+  const [courses, setCourses] = useState<CourseSummary[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/courses`)
+      .then((res) => res.json())
+      .then((data) => {
+        setCourses(data.courses || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <div className="text-center text-gray-500">Loading courses...</div>;
+  }
+
   return (
     <div className="space-y-3">
-      <button
-        onClick={onSelectDemoGolfClub}
-        className="w-full cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:border-blue-600 hover:bg-blue-600"
-      >
-        Demo Golf Club (9 Holes)
-      </button>
-      <button
-        onClick={onSelectDemoChampionship}
-        className="w-full cursor-pointer rounded-lg border-2 border-green-500 bg-green-500 px-4 py-3 font-medium text-white transition-colors hover:border-green-600 hover:bg-green-600"
-      >
-        Demo Championship (18 Holes)
-      </button>
+      {courses.map((course) => (
+        <button
+          key={course.id}
+          onClick={() => onSelectCourse(course.id)}
+          className="w-full cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:border-blue-600 hover:bg-blue-600"
+        >
+          {course.name}
+        </button>
+      ))}
     </div>
   );
 }

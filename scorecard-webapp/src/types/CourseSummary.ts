@@ -1,4 +1,4 @@
-export type CourseSummary = {
+export interface CourseSummary {
   id: number;
   name: string;
-};
+}

@@ -3,7 +3,7 @@ import { useAppState } from "./context/useAppState";
 import type { Hole } from "./types/Hole";
 import Scorecard from "./pages/Scorecard";
 import CourseList from "./components/CourseList";
-import { demoEighteenHoles, demoNineHoles } from "./data/demoCourses";
+import { demoEighteenHoles, demoNineHoles } from "./data/DemoCourses";
 
 function App() {
   const { setCourse } = useAppState();
@@ -13,14 +13,16 @@ function App() {
   const simpleScorecard = (holes: number): Hole[] =>
     Array.from({ length: holes }, (_, i) => ({ number: i + 1, par: 0 }));
 
-  const startDemoGolfClub = () => {
-    setCourse(demoNineHoles);
+  const handleSelectCourse = (courseId: number) => {
+    if (courseId == 1) {
+      setCourse(demoNineHoles);
+    }
+    if (courseId == 2) {
+      setCourse(demoEighteenHoles);
+    }
     navigate("/play");
   };
-  const startDemoChampionship = () => {
-    setCourse(demoEighteenHoles);
-    navigate("/play");
-  };
+
   const startSimpleScorecard = (holes: number) => {
     setCourse(simpleScorecard(holes));
     navigate("/play");
@@ -40,10 +42,7 @@ function App() {
                 <h2 className="text-center text-lg font-medium text-gray-700">
                   Choose a course to play:
                 </h2>
-                <CourseList
-                  onSelectDemoGolfClub={startDemoGolfClub}
-                  onSelectDemoChampionship={startDemoChampionship}
-                />
+                <CourseList onSelectCourse={handleSelectCourse} />
                 <div className="space-y-3">
                   <button
                     onClick={() => startSimpleScorecard(9)}

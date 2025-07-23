@@ -19,3 +19,15 @@ def test_connection():
             "timestamp": "2024-01-01T00:00:00Z",
         }
     )
+
+
+@app.route("/courses", methods=["GET"])
+def get_courses():
+    return jsonify(
+        {
+            "courses": [
+                {"id": 1, "name": "Demo Club (9 Holes)"},
+                {"id": 2, "name": "Demo Club (18 Holes)"},
+            ],
+        }
+    )
