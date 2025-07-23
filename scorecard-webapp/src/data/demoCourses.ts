@@ -1,0 +1,34 @@
+import type { Hole } from "../types/Hole";
+
+export const demoNineHoles: Hole[] = [
+  { number: 1, par: 4 },
+  { number: 2, par: 3 },
+  { number: 3, par: 5 },
+  { number: 4, par: 4 },
+  { number: 5, par: 4 },
+  { number: 6, par: 3 },
+  { number: 7, par: 5 },
+  { number: 8, par: 4 },
+  { number: 9, par: 4 },
+];
+
+export const demoEighteenHoles: Hole[] = [
+  { number: 1, par: 4 },
+  { number: 2, par: 4 },
+  { number: 3, par: 5 },
+  { number: 4, par: 3 },
+  { number: 5, par: 4 },
+  { number: 6, par: 5 },
+  { number: 7, par: 3 },
+  { number: 8, par: 4 },
+  { number: 9, par: 4 },
+  { number: 10, par: 5 },
+  { number: 11, par: 4 },
+  { number: 12, par: 3 },
+  { number: 13, par: 4 },
+  { number: 14, par: 5 },
+  { number: 15, par: 4 },
+  { number: 16, par: 3 },
+  { number: 17, par: 4 },
+  { number: 18, par: 5 },
+];
