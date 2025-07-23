@@ -3,7 +3,7 @@ import { useAppState } from "./context/useAppState";
 import type { Hole } from "./types/Hole";
 import Scorecard from "./pages/Scorecard";
 import CourseList from "./components/CourseList";
-import { demoEighteenHoles, demoNineHoles } from "./data/DemoCourses";
+import { demoEighteenHoles, demoNineHoles } from "./data/Courses";
 
 function App() {
   const { setCourse } = useAppState();
