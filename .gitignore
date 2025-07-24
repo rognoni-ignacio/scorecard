@@ -14,6 +14,7 @@ dist-ssr
 
 # Python
 __pycache__
+scorecard-api/.env
 
 # Editor directories and files
 .vscode/*
