@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
+from data.courses import COURSES
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173", "https://rognoni-ignacio.github.io"])
@@ -31,3 +32,11 @@ def get_courses():
             ],
         }
     )
+
+
+@app.route("/courses/<int:course_id>", methods=["GET"])
+def get_course(course_id):
+    course = COURSES.get(course_id)
+    if not course:
+        return jsonify({"error": "Course not found"}), 404
+    return jsonify(course)

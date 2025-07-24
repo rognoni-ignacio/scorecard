@@ -3,7 +3,6 @@ import { useAppState } from "./context/useAppState";
 import type { Hole } from "./types/Hole";
 import Scorecard from "./pages/Scorecard";
 import CourseList from "./components/CourseList";
-import { demoEighteenHoles, demoNineHoles } from "./data/Courses";
 
 function App() {
   const { setCourse } = useAppState();
@@ -13,12 +12,20 @@ function App() {
   const simpleScorecard = (holes: number): Hole[] =>
     Array.from({ length: holes }, (_, i) => ({ number: i + 1, par: 0 }));
 
-  const handleSelectCourse = (courseId: number) => {
-    if (courseId == 1) {
-      setCourse(demoNineHoles);
-    }
-    if (courseId == 2) {
-      setCourse(demoEighteenHoles);
+  const handleSelectCourse = async (courseId: number) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/courses/${courseId}`,
+      );
+      const data = await response.json();
+      if (data.holes) {
+        setCourse(data.holes as Hole[]);
+        navigate("/play");
+      } else {
+        alert("Course not found!");
+      }
+    } catch (error) {
+      alert(`Failed to load course data. ${error}`);
     }
     navigate("/play");
   };
