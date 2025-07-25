@@ -6,7 +6,6 @@ export default function SimpleScorecardSelection() {
   const { setCourse } = useAppState();
   const navigate = useNavigate();
 
-  // Simple scorecard (no par info)
   const simpleScorecard = (holes: number): Hole[] =>
     Array.from({ length: holes }, (_, i) => ({ number: i + 1, par: 0 }));
 

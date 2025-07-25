@@ -32,7 +32,9 @@ export default function SearchCourses({ onSelectCourse }: CourseListProps) {
 
   return (
     <div>
-      <h2 className="mb-2 text-lg font-semibold">Search for a Course</h2>
+      <h2 className="mb-2 text-center text-lg font-medium text-gray-700">
+        Search for a Course
+      </h2>
       <div className="mb-2 flex gap-2">
         <input
           type="text"
