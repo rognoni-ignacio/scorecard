@@ -16,9 +16,6 @@ export default function SimpleScorecardSelection() {
 
   return (
     <div>
-      <h2 className="mb-2 text-center text-lg font-medium text-gray-700">
-        Simple Scorecard
-      </h2>
       <div className="space-y-3">
         <button
           onClick={() => startSimpleScorecard(9)}
