@@ -1,1 +1,1 @@
-from . import app  # Import from __init__.py
+from . import app  # Vercel uses `app` as the WSGI entrypoint
