@@ -46,22 +46,22 @@ function App() {
                 Golf Scorecard
               </h1>
               <div className="space-y-6">
-                <h2 className="text-center text-lg font-medium text-gray-700">
-                  Choose a course to play:
-                </h2>
                 <CourseList onSelectCourse={handleSelectCourse} />
+                <h2 className="text-center text-lg font-medium text-gray-700">
+                  Or use a simple scorecard:
+                </h2>
                 <div className="space-y-3">
                   <button
                     onClick={() => startSimpleScorecard(9)}
                     className="w-full cursor-pointer rounded-lg border-2 border-gray-400 bg-gray-200 px-4 py-3 font-medium text-gray-800 transition-colors hover:border-gray-500 hover:bg-gray-300"
                   >
-                    Simple Scorecard (9 Holes)
+                    9 Holes
                   </button>
                   <button
                     onClick={() => startSimpleScorecard(18)}
                     className="w-full cursor-pointer rounded-lg border-2 border-gray-400 bg-gray-200 px-4 py-3 font-medium text-gray-800 transition-colors hover:border-gray-500 hover:bg-gray-300"
                   >
-                    Simple Scorecard (18 Holes)
+                    18 Holes
                   </button>
                 </div>
               </div>
