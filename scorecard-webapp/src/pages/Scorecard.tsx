@@ -14,6 +14,12 @@ export default function Scorecard() {
   const blocker = useBlocker(isGameInProgress);
 
   useEffect(() => {
+    if (!course) {
+      navigate("/");
+    }
+  }, [course, navigate]);
+
+  useEffect(() => {
     if (blocker.state === "blocked") {
       if (
         window.confirm("A match is in play. Do you really want to go back?")
@@ -41,8 +47,9 @@ export default function Scorecard() {
 
   const isRoundComplete = strokes.every((s) => s > 0);
 
-  if (!course)
-    return <div className="mt-8 text-center">No game in progress.</div>;
+  if (!course) {
+    return null;
+  }
 
   // Calculate total par and relative score if par is present
   const hasPar = course.some((h) => h.par && h.par > 0);
