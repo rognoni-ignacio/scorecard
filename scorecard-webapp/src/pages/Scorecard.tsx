@@ -36,7 +36,7 @@ export default function Scorecard() {
     <div className="flex h-dvh w-full overflow-hidden bg-gray-50">
       <div className="mx-auto flex h-full w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg">
         {/* Header */}
-        <div className="flex flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow">
+        <div className="flex h-20 flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow">
           <button
             className="rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300"
             onClick={() => navigate("/")}
