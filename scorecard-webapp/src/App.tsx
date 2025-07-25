@@ -46,9 +46,8 @@ function App() {
                 Golf Scorecard
               </h1>
               <div className="space-y-6">
-                <CourseList onSelectCourse={handleSelectCourse} />
                 <h2 className="text-center text-lg font-medium text-gray-700">
-                  Or use a simple scorecard:
+                  Simple Scorecard
                 </h2>
                 <div className="space-y-3">
                   <button
@@ -64,6 +63,7 @@ function App() {
                     18 Holes
                   </button>
                 </div>
+                <CourseList onSelectCourse={handleSelectCourse} />
               </div>
             </div>
           </div>
