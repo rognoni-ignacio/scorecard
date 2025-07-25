@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Scorecard from "./pages/Scorecard";
 import CourseList from "./components/CourseList/CourseList";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         }
       />
       <Route path="/play" element={<Scorecard />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
