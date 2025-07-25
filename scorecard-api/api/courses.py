@@ -7,12 +7,7 @@ courses_bp = Blueprint("courses", __name__, url_prefix="/api/courses")
 @courses_bp.route("/", methods=["GET"])
 def get_courses():
     return jsonify(
-        {
-            "courses": [
-                {"id": course["id"], "name": course["name"]}
-                for course in COURSES.values()
-            ]
-        }
+        {"courses": [{"id": c["id"], "name": c["name"]} for c in COURSES.values()]}
     )
 
 
