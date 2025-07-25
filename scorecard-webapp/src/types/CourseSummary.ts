@@ -1,4 +1,4 @@
 export interface CourseSummary {
   id: number;
-  course_name: string;
+  name: string;
 }
