@@ -1,18 +1,26 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppStateProvider } from "./context/AppStateContext.tsx";
 import "./index.css";
 import App from "./App.tsx";
 
 const basename = import.meta.env.VITE_ROUTER_BASENAME || "/";
 
+const router = createBrowserRouter(
+  [
+    {
+      path: "*",
+      Component: App,
+    },
+  ],
+  { basename: basename },
+);
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter basename={basename}>
-      <AppStateProvider>
-        <App />
-      </AppStateProvider>
-    </BrowserRouter>
+    <AppStateProvider>
+      <RouterProvider router={router} />
+    </AppStateProvider>
   </StrictMode>,
 );

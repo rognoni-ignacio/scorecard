@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppState } from "../context/useAppState";
-import { useNavigate } from "react-router-dom";
+import { useBlocker, useNavigate } from "react-router-dom";
 
 export default function Scorecard() {
   const navigate = useNavigate();
@@ -9,11 +9,30 @@ export default function Scorecard() {
     Array(course?.length ?? 0).fill(0),
   );
   const totalStrokes = strokes.reduce((sum, s) => sum + s, 0);
+  const isGameInProgress = strokes.some((s) => s > 0);
+
+  const blocker = useBlocker(isGameInProgress);
+
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      if (
+        window.confirm("A match is in play. Do you really want to go back?")
+      ) {
+        blocker.proceed();
+      } else {
+        blocker.reset();
+      }
+    }
+  }, [blocker]);
 
   const handleStrokesChange = (hole: number, strokes: number) => {
     setStrokes((prev: number[]) =>
       prev.map((s, i) => (i === hole ? Math.max(0, strokes) : s)),
     );
+  };
+
+  const handleGoBack = () => {
+    navigate("/");
   };
 
   const handleSaveRound = async () => {
@@ -39,7 +58,7 @@ export default function Scorecard() {
         <div className="flex h-20 flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow">
           <button
             className="rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300"
-            onClick={() => navigate("/")}
+            onClick={handleGoBack}
             aria-label="Back"
           >
             ←
