@@ -4,6 +4,7 @@ import type { Hole } from "./types/Hole";
 import Scorecard from "./pages/Scorecard";
 import CourseList from "./components/CourseList";
 import SimpleScorecardSelection from "./components/SimpleScorecardSelection";
+import PredefinedCoursesSelection from "./components/PredefinedCoursesSelection";
 
 function App() {
   const { setCourse } = useAppState();
@@ -39,6 +40,9 @@ function App() {
               </h1>
               <div className="space-y-6">
                 <SimpleScorecardSelection />
+                <PredefinedCoursesSelection
+                  onSelectCourse={handleSelectCourse}
+                />
                 <CourseList onSelectCourse={handleSelectCourse} />
               </div>
             </div>
