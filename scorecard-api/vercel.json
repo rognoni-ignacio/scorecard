@@ -1,3 +1,8 @@
 {
+  "functions": {
+    "api/index.py": {
+      "memory": 128
+    }
+  },
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
 }
