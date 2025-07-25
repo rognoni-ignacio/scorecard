@@ -2,9 +2,9 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useAppState } from "./context/useAppState";
 import type { Hole } from "./types/Hole";
 import Scorecard from "./pages/Scorecard";
-import CourseList from "./components/CourseList";
 import SimpleScorecardSelection from "./components/SimpleScorecardSelection";
 import PredefinedCoursesSelection from "./components/PredefinedCoursesSelection";
+import SearchCourses from "./components/SearchCourses";
 
 function App() {
   const { setCourse } = useAppState();
@@ -43,7 +43,7 @@ function App() {
                 <PredefinedCoursesSelection
                   onSelectCourse={handleSelectCourse}
                 />
-                <CourseList onSelectCourse={handleSelectCourse} />
+                <SearchCourses onSelectCourse={handleSelectCourse} />
               </div>
             </div>
           </div>
