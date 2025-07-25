@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { CourseSummary } from "../types/CourseSummary";
+import type { CourseSummary } from "../../types/CourseSummary";
 
 interface CourseListProps {
   onSelectCourse: (courseId: number) => void;

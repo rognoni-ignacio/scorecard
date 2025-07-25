@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useAppState } from "../context/useAppState";
-import type { Hole } from "../types/Hole";
+import { useAppState } from "../../context/useAppState";
+import type { Hole } from "../../types/Hole";
 
 export default function SimpleScorecardSelection() {
   const { setCourse } = useAppState();
