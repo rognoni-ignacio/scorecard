@@ -38,4 +38,19 @@ COURSES = {
             {"number": 18, "par": 5},
         ],
     },
+    3: {
+        "id": 3,
+        "name": "Golf Negralejo (9 hoyos)",
+        "holes": [
+            {"number": 1, "par": 3},
+            {"number": 2, "par": 3},
+            {"number": 3, "par": 3},
+            {"number": 4, "par": 3},
+            {"number": 5, "par": 3},
+            {"number": 6, "par": 3},
+            {"number": 7, "par": 4},
+            {"number": 8, "par": 3},
+            {"number": 9, "par": 4},
+        ],
+    },
 }
