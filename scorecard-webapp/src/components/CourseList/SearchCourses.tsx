@@ -1,11 +1,12 @@
 import { useState } from "react";
 import type { CourseSummary } from "../../types/CourseSummary";
+import { useAppState } from "../../context/useAppState";
+import type { Hole } from "../../types/Hole";
+import { useNavigate } from "react-router-dom";
 
-interface CourseListProps {
-  onSelectCourse: (courseId: number) => void;
-}
-
-export default function SearchCourses({ onSelectCourse }: CourseListProps) {
+export default function SearchCourses() {
+  const { setCourse } = useAppState();
+  const navigate = useNavigate();
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedCourses, setSearchedCourses] = useState<CourseSummary[]>([]);
@@ -30,6 +31,24 @@ export default function SearchCourses({ onSelectCourse }: CourseListProps) {
         setSearchLoading(false);
         alert("An error occurred while searching for courses.");
       });
+  };
+
+  const handleSelectExternalCourse = async (courseId: number) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/external/courses/${courseId}`,
+      );
+      const data = await response.json();
+      console.log(data);
+      if (data.holes) {
+        setCourse(data.holes as Hole[]);
+        navigate("/play");
+      } else {
+        alert("Course not found!");
+      }
+    } catch (error) {
+      alert(`Failed to load course data. ${error}`);
+    }
   };
 
   return (
@@ -60,7 +79,7 @@ export default function SearchCourses({ onSelectCourse }: CourseListProps) {
           {searchedCourses.map((course) => (
             <button
               key={course.id}
-              onClick={() => onSelectCourse(course.id)}
+              onClick={() => handleSelectExternalCourse(course.id)}
               className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
             >
               {course.name}

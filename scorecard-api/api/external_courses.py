@@ -38,3 +38,26 @@ def search_courses():
     except requests.exceptions.RequestException as e:
         print(f"API request failed: {e}")
         return jsonify({"error": "Failed to fetch courses from external API"}), 500
+
+
+@external_courses_bp.route("/<int:course_id>", methods=["GET"])
+def get_course(course_id):
+    try:
+        response = requests.get(
+            f"{GOLF_API_URL}/courses/{course_id}",
+            headers={"Authorization": f"Key {API_KEY}"},
+        )
+        response.raise_for_status()
+        api_data = response.json().get("course")
+        course = map_golfcourseapi_to_course(api_data)
+        return jsonify(course.to_dict())
+    except requests.exceptions.RequestException as e:
+        print(f"API request failed: {e}")
+        return (
+            jsonify(
+                {
+                    "error": f"Failed to fetch course with id: {course_id} from external API"
+                }
+            ),
+            500,
+        )
