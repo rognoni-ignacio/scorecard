@@ -27,12 +27,8 @@ export default function PredefinedCoursesSelection() {
         `${import.meta.env.VITE_API_URL}/courses/${courseId}`,
       );
       const data = await response.json();
-      if (data.holes) {
-        setCourse(data.holes as Hole[]);
-        navigate("/play");
-      } else {
-        alert("Course not found!");
-      }
+      setCourse({ name: data.name, holes: data.holes as Hole[] });
+      navigate("/play");
     } catch (error) {
       alert(`Failed to load course data. ${error}`);
     }

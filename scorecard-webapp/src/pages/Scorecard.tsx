@@ -6,7 +6,7 @@ export default function Scorecard() {
   const navigate = useNavigate();
   const { course } = useAppState();
   const [strokes, setStrokes] = useState<number[]>(
-    Array(course?.length ?? 0).fill(0),
+    Array(course?.holes.length ?? 0).fill(0),
   );
   const totalStrokes = strokes.reduce((sum, s) => sum + s, 0);
   const isGameInProgress = strokes.some((s) => s > 0);
@@ -52,9 +52,9 @@ export default function Scorecard() {
   }
 
   // Calculate total par and relative score if par is present
-  const hasPar = course.some((h) => h.par && h.par > 0);
+  const hasPar = course.holes.some((h) => h.par && h.par > 0);
   const totalPar = hasPar
-    ? course.reduce((sum, h) => sum + (h.par || 0), 0)
+    ? course.holes.reduce((sum, h) => sum + (h.par || 0), 0)
     : null;
   const relativeScore = hasPar ? totalStrokes - (totalPar ?? 0) : null;
 
@@ -70,7 +70,7 @@ export default function Scorecard() {
             ←
           </button>
           <h1 className="flex-1 text-center text-2xl font-bold text-gray-900">
-            Scorecard
+            {course.name}
           </h1>
           {hasPar && totalPar !== null ? (
             <span className="ml-2 text-sm font-semibold text-blue-600">
@@ -81,7 +81,7 @@ export default function Scorecard() {
           )}
         </div>
         <ul className="flex-1 divide-y divide-gray-200 overflow-y-auto overscroll-contain px-4 py-2">
-          {course.map((hole, i) => (
+          {course.holes.map((hole, i) => (
             <li
               key={hole.number}
               className="flex items-center justify-between py-3"

@@ -10,7 +10,7 @@ export default function SimpleScorecardSelection() {
     Array.from({ length: holes }, (_, i) => ({ number: i + 1, par: 0 }));
 
   const startSimpleScorecard = (holes: number) => {
-    setCourse(simpleScorecard(holes));
+    setCourse({ name: `Simple ${holes} Holes`, holes: simpleScorecard(holes) });
     navigate("/play");
   };
 

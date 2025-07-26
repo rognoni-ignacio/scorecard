@@ -41,7 +41,7 @@ export default function SearchCourses() {
       const data = await response.json();
       console.log(data);
       if (data.holes) {
-        setCourse(data.holes as Hole[]);
+        setCourse({ name: data.name, holes: data.holes as Hole[] });
         navigate("/play");
       } else {
         alert("Course not found!");
