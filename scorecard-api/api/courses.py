@@ -3,6 +3,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from .data.courses import COURSES
+from .mappers.course_mapper import map_golfcourseapi_course_search_to_course
 
 load_dotenv()
 
@@ -39,7 +40,11 @@ def get_courses_api():
             headers={"Authorization": f"Key {API_KEY}"},
         )
         response.raise_for_status()
-        return jsonify(response.json())
+        courses = response.json().get("courses", [])
+        mapped_courses = [
+            map_golfcourseapi_course_search_to_course(c).to_dict() for c in courses
+        ]
+        return jsonify({"courses": mapped_courses})
     except requests.exceptions.RequestException as e:
         print(f"API request failed: {e}")
         return jsonify({"error": "Failed to fetch courses from external API"}), 500
