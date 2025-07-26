@@ -1,8 +1,11 @@
-COURSES = {
-    1: {
-        "id": 1,
-        "name": "Demo Club (9 Holes)",
-        "holes": [
+from typing import Dict
+from ..models.course import Course
+
+COURSES: Dict[int, Course] = {
+    1: Course(
+        id=1,
+        name="Demo Club (9 Holes)",
+        holes=[
             {"number": 1, "par": 4},
             {"number": 2, "par": 3},
             {"number": 3, "par": 5},
@@ -13,11 +16,11 @@ COURSES = {
             {"number": 8, "par": 4},
             {"number": 9, "par": 4},
         ],
-    },
-    2: {
-        "id": 2,
-        "name": "Demo Club (18 Holes)",
-        "holes": [
+    ),
+    2: Course(
+        id=2,
+        name="Demo Club (18 Holes)",
+        holes=[
             {"number": 1, "par": 4},
             {"number": 2, "par": 4},
             {"number": 3, "par": 5},
@@ -37,11 +40,11 @@ COURSES = {
             {"number": 17, "par": 4},
             {"number": 18, "par": 5},
         ],
-    },
-    3: {
-        "id": 3,
-        "name": "Golf Negralejo (9 hoyos)",
-        "holes": [
+    ),
+    3: Course(
+        id=3,
+        name="Golf Negralejo (9 hoyos)",
+        holes=[
             {"number": 1, "par": 3},
             {"number": 2, "par": 3},
             {"number": 3, "par": 3},
@@ -52,5 +55,5 @@ COURSES = {
             {"number": 8, "par": 3},
             {"number": 9, "par": 4},
         ],
-    },
+    ),
 }
