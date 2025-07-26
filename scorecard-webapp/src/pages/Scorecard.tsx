@@ -8,8 +8,11 @@ export default function Scorecard() {
   const [strokes, setStrokes] = useState<number[]>(
     Array(course?.holes.length ?? 0).fill(0),
   );
-  const totalStrokes = strokes.reduce((sum, s) => sum + s, 0);
-  const isGameInProgress = strokes.some((s) => s > 0);
+  const totalStrokes = strokes.reduce(
+    (sum, strokesForHole) => sum + strokesForHole,
+    0,
+  );
+  const isGameInProgress = strokes.some((strokesForHole) => strokesForHole > 0);
 
   const blocker = useBlocker(isGameInProgress);
 
@@ -31,9 +34,28 @@ export default function Scorecard() {
     }
   }, [blocker]);
 
-  const handleStrokesChange = (hole: number, strokes: number) => {
-    setStrokes((prev: number[]) =>
-      prev.map((s, i) => (i === hole ? Math.max(0, strokes) : s)),
+  const handleMinusClick = (holeIndex: number) => {
+    setStrokes((previousStrokes) =>
+      previousStrokes.map((strokesForHole, currentIndex) =>
+        currentIndex === holeIndex
+          ? Math.max(0, strokesForHole - 1)
+          : strokesForHole,
+      ),
+    );
+  };
+
+  const handlePlusClick = (holeIndex: number) => {
+    setStrokes((previousStrokes) =>
+      previousStrokes.map((strokesForHole, currentIndex) => {
+        if (currentIndex !== holeIndex) {
+          return strokesForHole;
+        }
+        if (strokesForHole === 0) {
+          const par = course?.holes[currentIndex].par;
+          return par && par > 0 ? par : 1;
+        }
+        return strokesForHole + 1;
+      }),
     );
   };
 
@@ -45,16 +67,15 @@ export default function Scorecard() {
     alert("Feature to be added...");
   };
 
-  const isRoundComplete = strokes.every((s) => s > 0);
+  const isRoundComplete = strokes.every((stroke) => stroke > 0);
 
   if (!course) {
     return null;
   }
 
-  // Calculate total par and relative score if par is present
-  const hasPar = course.holes.some((h) => h.par && h.par > 0);
+  const hasPar = course.holes.some((hole) => hole.par && hole.par > 0);
   const totalPar = hasPar
-    ? course.holes.reduce((sum, h) => sum + (h.par || 0), 0)
+    ? course.holes.reduce((sum, hole) => sum + (hole.par || 0), 0)
     : null;
   const relativeScore = hasPar ? totalStrokes - (totalPar ?? 0) : null;
 
@@ -98,9 +119,7 @@ export default function Scorecard() {
                 {strokes[i] > 0 && (
                   <button
                     className="h-10 w-10 cursor-pointer rounded-lg bg-gray-200 transition-colors hover:bg-gray-300"
-                    onClick={() =>
-                      handleStrokesChange(i, Math.max(0, strokes[i] - 1))
-                    }
+                    onClick={() => handleMinusClick(i)}
                   >
                     -
                   </button>
@@ -108,7 +127,7 @@ export default function Scorecard() {
                 <span>{strokes[i]}</span>
                 <button
                   className="h-10 w-10 cursor-pointer rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600"
-                  onClick={() => handleStrokesChange(i, strokes[i] + 1)}
+                  onClick={() => handlePlusClick(i)}
                 >
                   +
                 </button>
