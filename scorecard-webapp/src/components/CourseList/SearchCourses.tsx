@@ -12,7 +12,9 @@ export default function SearchCourses({ onSelectCourse }: CourseListProps) {
 
   const handleSearch = () => {
     setSearchLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/courses/api-search?q=${searchQuery}`)
+    fetch(
+      `${import.meta.env.VITE_API_URL}/external/courses/search?q=${searchQuery}`,
+    )
       .then((res) => res.json())
       .then((data) => {
         setSearchLoading(false);
