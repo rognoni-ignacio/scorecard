@@ -17,7 +17,10 @@ function App() {
                   Simple Scorecard
                 </h1>
               </div>
-              <div className="flex-1 overflow-y-auto overscroll-contain p-6">
+              <div
+                className="flex-1 overflow-y-auto overscroll-contain pt-6 pr-2 pb-6 pl-2"
+                style={{ scrollbarGutter: "stable both-edges" }}
+              >
                 <CourseList />
               </div>
               <AppFooter />
