@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Scorecard from "./pages/Scorecard";
 import CourseList from "./components/CourseList/CourseList";
 import NotFound from "./pages/NotFound";
+import AppFooter from "./components/AppFooter";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <div className="flex-1 overflow-y-auto overscroll-contain p-6">
                 <CourseList />
               </div>
+              <AppFooter />
             </div>
           </div>
         }
