@@ -33,19 +33,19 @@ export default function SearchCourses({ onSelectCourse }: CourseListProps) {
   return (
     <div>
       <h2 className="mb-2 text-center text-lg font-medium text-gray-700">
-        Search for a Course
+        Search
       </h2>
       <div className="mb-2 flex gap-2">
         <input
           type="text"
-          placeholder="Search for a course..."
+          placeholder="Course name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-gray-700 focus:border-blue-500 focus:outline-none"
         />
         <button
           onClick={handleSearch}
-          className="rounded-lg border-2 border-blue-500 bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:border-blue-600 hover:bg-blue-600"
+          className="cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:border-blue-600 hover:bg-blue-600"
         >
           Search
         </button>
@@ -59,7 +59,7 @@ export default function SearchCourses({ onSelectCourse }: CourseListProps) {
             <button
               key={course.id}
               onClick={() => onSelectCourse(course.id)}
-              className="w-full cursor-pointer rounded-lg border-2 border-green-500 bg-green-500 px-4 py-3 font-medium text-white transition-colors hover:border-green-600 hover:bg-green-600"
+              className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
             >
               {course.name}
             </button>

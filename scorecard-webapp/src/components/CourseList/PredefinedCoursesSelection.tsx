@@ -29,14 +29,14 @@ export default function PredefinedCoursesSelection({
   return (
     <div>
       <h2 className="mb-2 text-center text-lg font-medium text-gray-700">
-        Available Courses
+        Predefined courses
       </h2>
       <div className="space-y-3">
         {courses.map((course) => (
           <button
             key={course.id}
             onClick={() => onSelectCourse(course.id)}
-            className="w-full cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:border-blue-600 hover:bg-blue-600"
+            className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
           >
             {course.name}
           </button>

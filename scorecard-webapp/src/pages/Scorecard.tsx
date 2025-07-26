@@ -61,10 +61,9 @@ export default function Scorecard() {
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-gray-50">
       <div className="mx-auto flex h-full w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg">
-        {/* Header */}
         <div className="flex h-20 flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow">
           <button
-            className="rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300"
+            className="cursor-pointer rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300"
             onClick={handleGoBack}
             aria-label="Back"
           >
@@ -73,7 +72,6 @@ export default function Scorecard() {
           <h1 className="flex-1 text-center text-2xl font-bold text-gray-900">
             Scorecard
           </h1>
-          {/* Show total par in top right if available */}
           {hasPar && totalPar !== null ? (
             <span className="ml-2 text-sm font-semibold text-blue-600">
               Par {totalPar}
@@ -82,7 +80,6 @@ export default function Scorecard() {
             <div className="w-12" />
           )}
         </div>
-        {/* Scrollable List */}
         <ul className="flex-1 divide-y divide-gray-200 overflow-y-auto overscroll-contain px-4 py-2">
           {course.map((hole, i) => (
             <li
@@ -119,7 +116,6 @@ export default function Scorecard() {
             </li>
           ))}
         </ul>
-        {/* Footer */}
         <div className="flex-shrink-0 rounded-b-lg bg-white p-4 shadow">
           <div className="mb-4 flex items-center justify-between">
             <span className="text-lg font-semibold text-gray-700">Total</span>
