@@ -3,7 +3,10 @@ import os
 import requests
 from dotenv import load_dotenv
 from .data.courses import COURSES
-from .mappers.course_mapper import map_golfcourseapi_course_search_to_course
+from .mappers.course_mapper import (
+    map_golfcourseapi_to_course,
+    map_golfcourseapi_course_search_to_summary,
+)
 
 load_dotenv()
 
@@ -42,7 +45,7 @@ def get_courses_api():
         response.raise_for_status()
         courses = response.json().get("courses", [])
         mapped_courses = [
-            map_golfcourseapi_course_search_to_course(c).to_dict() for c in courses
+            map_golfcourseapi_course_search_to_summary(c).to_dict() for c in courses
         ]
         return jsonify({"courses": mapped_courses})
     except requests.exceptions.RequestException as e:
