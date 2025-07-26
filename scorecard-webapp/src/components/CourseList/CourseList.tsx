@@ -23,9 +23,8 @@ export default function CourseList() {
     } catch (error) {
       alert(`Failed to load course data. ${error}`);
     }
-    navigate("/play");
   };
-  
+
   return (
     <div className="space-y-6">
       <SimpleScorecardSelection />
