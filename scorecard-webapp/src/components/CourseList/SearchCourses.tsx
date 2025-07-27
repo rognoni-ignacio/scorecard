@@ -12,7 +12,8 @@ export default function SearchCourses() {
   const [searchedCourses, setSearchedCourses] = useState<CourseSummary[]>([]);
   const [noCoursesFound, setNoCoursesFound] = useState(false);
 
-  const searchCoursesAction = () => {
+  const searchCoursesAction = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setSearchLoading(true);
     fetch(
       `${import.meta.env.VITE_API_URL}/external/courses/search?q=${searchQuery}`,
@@ -57,7 +58,7 @@ export default function SearchCourses() {
       <h2 className="mb-2 text-center text-lg font-medium text-gray-700">
         Search
       </h2>
-      <form action={searchCoursesAction} className="mb-2 flex gap-2">
+      <form onSubmit={searchCoursesAction} className="mb-2 flex gap-2">
         <input
           type="text"
           placeholder="Course name..."
