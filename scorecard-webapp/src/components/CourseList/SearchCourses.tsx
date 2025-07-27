@@ -10,8 +10,9 @@ export default function SearchCourses() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedCourses, setSearchedCourses] = useState<CourseSummary[]>([]);
+  const [noCoursesFound, setNoCoursesFound] = useState(false);
 
-  const handleSearch = () => {
+  const searchCoursesAction = () => {
     setSearchLoading(true);
     fetch(
       `${import.meta.env.VITE_API_URL}/external/courses/search?q=${searchQuery}`,
@@ -24,7 +25,7 @@ export default function SearchCourses() {
           setSearchedCourses(foundCourses);
         } else {
           setSearchedCourses([]);
-          alert("Course not found.");
+          setNoCoursesFound(true);
         }
       })
       .catch(() => {
@@ -56,7 +57,7 @@ export default function SearchCourses() {
       <h2 className="mb-2 text-center text-lg font-medium text-gray-700">
         Search
       </h2>
-      <div className="mb-2 flex gap-2">
+      <form action={searchCoursesAction} className="mb-2 flex gap-2">
         <input
           type="text"
           placeholder="Course name..."
@@ -65,14 +66,17 @@ export default function SearchCourses() {
           className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-gray-700 focus:border-blue-500 focus:outline-none"
         />
         <button
-          onClick={handleSearch}
+          type="submit"
           className="cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:border-blue-600 hover:bg-blue-600"
         >
           Search
         </button>
-      </div>
+      </form>
       {searchLoading && (
         <div className="text-center text-gray-500">Searching courses...</div>
+      )}
+      {noCoursesFound && (
+        <div className="text-center text-gray-500">No courses found.</div>
       )}
       {searchedCourses.length > 0 && (
         <div className="mt-2 space-y-3">
