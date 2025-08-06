@@ -1,3 +1,4 @@
+
 # Nano's Golf Scorecard
 
 Nano's Golf Scorecard is a simple, modern web application for tracking golf scores. It allows you to record strokes for each hole and view your total score. The app is built with React, TypeScript, and Vite for the frontend, and Flask for the backend API.
@@ -55,8 +56,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Run the Flask API
-set FLASK_APP=api/index.py      # Windows
-export FLASK_APP=api/index.py   # Mac/Linux
+set FLASK_APP=api/__init__.py      # Windows
+export FLASK_APP=api/__init__.py   # Mac/Linux
 
 flask run
 ```
