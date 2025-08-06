@@ -3,6 +3,7 @@ from flask_cors import CORS
 from .courses import courses_bp
 from .external_courses import external_courses_bp
 
+
 def create_app():
     """
     Application factory for Flask app.
@@ -12,3 +13,6 @@ def create_app():
     app.register_blueprint(courses_bp)
     app.register_blueprint(external_courses_bp)
     return app
+
+
+app = create_app()
