@@ -36,6 +36,10 @@ jobs:
         run: npm ci
         working-directory: ./scorecard-webapp
 
+      - name: Test
+        run: npm test
+        working-directory: ./scorecard-webapp
+
       - name: Build
         run: npm run build
         working-directory: ./scorecard-webapp
