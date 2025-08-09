@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import type { Hole } from "../types/Hole";
+import type { Hole } from "../models/Hole";
 
-export type CourseState = {
+export interface CourseState {
   name: string;
   holes: Hole[];
-};
+}
 
 type AppState = {
   course: CourseState | null;
