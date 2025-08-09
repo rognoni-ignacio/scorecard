@@ -4,11 +4,12 @@ import { vi } from "vitest";
 import { AppStateContext } from "../context/context";
 import Profile from "./Profile";
 
+const mockNavigate = vi.fn();
 vi.mock("react-router", () => ({
-  useNavigate: () => vi.fn(),
+  useNavigate: () => mockNavigate,
 }));
 
-test("shows user info and allows logout", async () => {
+test("shows user info and allows navigation and logout", async () => {
   const setUser = vi.fn();
   render(
     <AppStateContext.Provider
@@ -22,6 +23,9 @@ test("shows user info and allows logout", async () => {
   expect(screen.getByText(/123/)).toBeInTheDocument();
 
   const user = userEvent.setup();
+  await user.click(screen.getByRole("button", { name: /back/i }));
+  expect(mockNavigate).toHaveBeenCalledWith("/");
+
   await user.click(screen.getByRole("button", { name: /logout/i }));
   expect(setUser).toHaveBeenCalledWith(null);
 });
