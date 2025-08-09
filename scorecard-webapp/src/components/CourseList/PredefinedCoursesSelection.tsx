@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { CourseSummary } from "../../types/CourseSummary";
 import { useAppState } from "../../context/useAppState";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import type { Hole } from "../../types/Hole";
 
 export default function PredefinedCoursesSelection() {
