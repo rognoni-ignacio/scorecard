@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppState } from "../context/useAppState";
-import { useBlocker, useNavigate } from "react-router-dom";
+import { useBlocker, useNavigate } from "react-router";
 
 export default function Scorecard() {
   const navigate = useNavigate();

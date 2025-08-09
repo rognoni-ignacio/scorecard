@@ -5,7 +5,7 @@ import { AppStateContext } from "../context/context";
 import type { CourseState } from "../context/context";
 import { vi } from "vitest";
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router", () => ({
   useNavigate: () => vi.fn(),
   useBlocker: () => ({ state: "unblocked", proceed: vi.fn(), reset: vi.fn() }),
 }));
