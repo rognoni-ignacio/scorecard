@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import type { Hole } from "../models/Hole";
+import type { User } from "../models/User";
 
 export interface CourseState {
   name: string;
@@ -9,6 +10,8 @@ export interface CourseState {
 type AppState = {
   course: CourseState | null;
   setCourse: (course: CourseState | null) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 };
 
 export const AppStateContext = createContext<AppState | undefined>(undefined);

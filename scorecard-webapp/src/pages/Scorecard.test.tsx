@@ -12,8 +12,9 @@ vi.mock("react-router", () => ({
 
 function renderScorecard(course: CourseState) {
   const setCourse = vi.fn();
+  const setUser = vi.fn();
   render(
-    <AppStateContext.Provider value={{ course, setCourse }}>
+    <AppStateContext.Provider value={{ course, setCourse, user: null, setUser }}>
       <Scorecard />
     </AppStateContext.Provider>,
   );
