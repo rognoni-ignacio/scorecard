@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { CourseSummary } from "../../types/CourseSummary";
+import type { CourseSummary } from "../../models/CourseSummary";
 import { useAppState } from "../../context/useAppState";
-import type { Hole } from "../../types/Hole";
+import type { Hole } from "../../models/Hole";
 import { useNavigate } from "react-router";
 
 export default function SearchCourses() {

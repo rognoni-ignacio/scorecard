@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import type { CourseSummary } from "../../types/CourseSummary";
+import type { CourseSummary } from "../../models/CourseSummary";
 import { useAppState } from "../../context/useAppState";
 import { useNavigate } from "react-router";
-import type { Hole } from "../../types/Hole";
+import type { Hole } from "../../models/Hole";
 
 export default function PredefinedCoursesSelection() {
   const { setCourse } = useAppState();
