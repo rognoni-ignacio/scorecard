@@ -6,10 +6,17 @@ import { AppStateContext } from "../context/context";
 test("renders link to GitHub repository", () => {
   render(
     <AppStateContext.Provider
-      value={{ user: null, setUser: vi.fn(), course: null, setCourse: vi.fn(), theme: "light", setTheme: vi.fn() }}
+      value={{
+        user: null,
+        setUser: vi.fn(),
+        course: null,
+        setCourse: vi.fn(),
+        theme: "light",
+        setTheme: vi.fn(),
+      }}
     >
       <AppFooter />
-    </AppStateContext.Provider>
+    </AppStateContext.Provider>,
   );
   const link = screen.getByRole("link", { name: /github/i });
   expect(link).toHaveAttribute(

@@ -137,7 +137,9 @@ export default function Scorecard() {
         </ul>
         <div className="flex-shrink-0 rounded-b-lg bg-white p-4 shadow dark:bg-gray-900">
           <div className="mb-4 flex items-center justify-between">
-            <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">Total</span>
+            <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+              Total
+            </span>
             <span className="flex items-center gap-2 text-2xl font-bold text-blue-600 dark:text-blue-400">
               {totalStrokes}
               {hasPar && relativeScore !== null && (

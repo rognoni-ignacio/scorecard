@@ -74,10 +74,14 @@ export default function SearchCourses() {
         </button>
       </form>
       {searchLoading && (
-        <div className="text-center text-gray-500 dark:text-gray-400">Searching courses...</div>
+        <div className="text-center text-gray-500 dark:text-gray-400">
+          Searching courses...
+        </div>
       )}
       {noCoursesFound && (
-        <div className="text-center text-gray-500 dark:text-gray-400">No courses found.</div>
+        <div className="text-center text-gray-500 dark:text-gray-400">
+          No courses found.
+        </div>
       )}
       {searchedCourses.length > 0 && (
         <div className="mt-2 space-y-3">

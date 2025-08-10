@@ -11,7 +11,10 @@ export default function Home() {
           <h1 className="flex-1 text-center text-2xl font-bold text-gray-900 dark:text-gray-100">
             Simple Scorecard
           </h1>
-          <Link to="/profile" className="flex-1 text-right text-sm text-blue-500 dark:text-blue-400">
+          <Link
+            to="/profile"
+            className="flex-1 text-right text-sm text-blue-500 dark:text-blue-400"
+          >
             Profile
           </Link>
         </div>
@@ -26,4 +29,3 @@ export default function Home() {
     </div>
   );
 }
-

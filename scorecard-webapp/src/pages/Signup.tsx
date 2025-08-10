@@ -21,7 +21,9 @@ export default function Signup() {
     <div className="flex h-dvh w-full overflow-hidden bg-gray-50 dark:bg-gray-950">
       <div className="mx-auto flex h-full w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900">
         <div className="flex h-20 flex-shrink-0 items-center justify-center rounded-t-lg bg-white p-4 shadow dark:bg-gray-900">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Simple Scorecard</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            Simple Scorecard
+          </h1>
         </div>
         <div className="flex flex-1 flex-col gap-6 p-6">
           <p className="text-center text-gray-600 dark:text-gray-400">
