@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { Link } from "react-router";
 import { useLogin } from "../hooks/useLogin";
 import AppFooter from "../components/AppFooter";
@@ -24,7 +24,9 @@ export default function Signup() {
           <h1 className="text-2xl font-bold text-gray-900">Simple Scorecard</h1>
         </div>
         <div className="flex flex-1 flex-col gap-6 p-6">
-          <p className="text-center text-gray-600">Create an account to start tracking your golf scores</p>
+          <p className="text-center text-gray-600">
+            Create an account to start tracking your golf scores
+          </p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               value={name}
@@ -54,7 +56,7 @@ export default function Signup() {
             </button>
           </form>
           <p className="text-center text-sm text-gray-600">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link to="/login" className="text-blue-500">
               Login
             </Link>
