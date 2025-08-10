@@ -6,7 +6,7 @@ export default function LogoutButton() {
     <button
       type="button"
       onClick={logout}
-      className="rounded bg-blue-500 p-2 text-white"
+      className="cursor-pointer rounded bg-blue-500 p-2 text-white"
     >
       Logout
     </button>

@@ -41,7 +41,8 @@ export default function Login() {
             />
             <button
               type="submit"
-              className="rounded bg-blue-500 p-2 text-white"
+              className="w-full cursor-pointer rounded-lg bg-blue-500 py-4 text-xl font-bold text-white shadow transition-colors hover:bg-blue-600 active:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={!name.trim() || !password}
             >
               Login
             </button>
