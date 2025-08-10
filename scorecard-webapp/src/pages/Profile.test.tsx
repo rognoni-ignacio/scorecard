@@ -13,7 +13,7 @@ test("shows user info and allows navigation and logout", async () => {
   const setUser = vi.fn();
   render(
     <AppStateContext.Provider
-      value={{ user: { id: "123", name: "Alice" }, setUser, course: null, setCourse: vi.fn() }}
+      value={{ user: { id: "123", name: "Alice" }, setUser, course: null, setCourse: vi.fn(), theme: "light", setTheme: vi.fn() }}
     >
       <Profile />
     </AppStateContext.Provider>,

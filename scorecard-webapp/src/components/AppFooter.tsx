@@ -1,12 +1,17 @@
+import { useAppState } from "../context/useAppState";
+
 export default function AppFooter() {
+  const { theme, setTheme } = useAppState();
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+
   return (
-    <footer className="flex items-center justify-center gap-2 p-2 text-xs text-gray-400">
+    <footer className="flex items-center justify-center gap-2 p-2 text-xs text-gray-400 dark:text-gray-500">
       Made with <span className="text-red-500">♥</span> by Ignacio Rognoni
       <a
         href="https://github.com/rognoni-ignacio/scorecard"
         target="_blank"
         rel="noopener noreferrer"
-        className="ml-1 hover:text-gray-600"
+        className="ml-1 hover:text-gray-600 dark:hover:text-gray-300"
         aria-label="GitHub"
       >
         <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -21,6 +26,13 @@ export default function AppFooter() {
           />
         </svg>
       </a>
+      <button
+        onClick={toggleTheme}
+        aria-label="Toggle theme"
+        className="ml-2 cursor-pointer rounded p-1 text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+      >
+        {theme === "light" ? "☀️" : "🌙"}
+      </button>
     </footer>
   );
 }

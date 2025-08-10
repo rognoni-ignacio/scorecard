@@ -11,7 +11,7 @@ vi.mock("react-router", () => ({
 
 test("renders signup form", () => {
   render(
-    <AppStateContext.Provider value={{ user: null, setUser: vi.fn(), course: null, setCourse: vi.fn() }}>
+    <AppStateContext.Provider value={{ user: null, setUser: vi.fn(), course: null, setCourse: vi.fn(), theme: "light", setTheme: vi.fn() }}>
       <Signup />
     </AppStateContext.Provider>,
   );

@@ -55,7 +55,7 @@ export default function SearchCourses() {
 
   return (
     <div>
-      <h2 className="mb-2 text-center text-lg font-medium text-gray-700">
+      <h2 className="mb-2 text-center text-lg font-medium text-gray-700 dark:text-gray-300">
         Search
       </h2>
       <form onSubmit={searchCoursesAction} className="mb-2 flex gap-2">
@@ -64,20 +64,24 @@ export default function SearchCourses() {
           placeholder="Course name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-gray-700 focus:border-blue-500 focus:outline-none"
+          className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-gray-700 focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
         />
         <button
           type="submit"
-          className="cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:border-blue-600 hover:bg-blue-600"
+          className="cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:border-blue-600 hover:bg-blue-600 dark:border-blue-600 dark:bg-blue-600 dark:hover:border-blue-700 dark:hover:bg-blue-700"
         >
           Search
         </button>
       </form>
       {searchLoading && (
-        <div className="text-center text-gray-500">Searching courses...</div>
+        <div className="text-center text-gray-500 dark:text-gray-400">
+          Searching courses...
+        </div>
       )}
       {noCoursesFound && (
-        <div className="text-center text-gray-500">No courses found.</div>
+        <div className="text-center text-gray-500 dark:text-gray-400">
+          No courses found.
+        </div>
       )}
       {searchedCourses.length > 0 && (
         <div className="mt-2 space-y-3">
@@ -85,7 +89,7 @@ export default function SearchCourses() {
             <button
               key={course.id}
               onClick={() => handleSelectExternalCourse(course.id)}
-              className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
+              className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-900 dark:text-blue-100 dark:hover:border-blue-600 dark:hover:bg-blue-800"
             >
               {course.name}
             </button>
