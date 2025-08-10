@@ -21,8 +21,8 @@ export default function Login() {
         <div className="flex h-20 flex-shrink-0 items-center justify-center rounded-t-lg bg-white p-4 shadow">
           <h1 className="text-2xl font-bold text-gray-900">Simple Scorecard</h1>
         </div>
-        <div className="flex flex-1 flex-col justify-center gap-6 p-6">
-          <p className="text-center text-gray-600">Track your golf scores with ease.</p>
+        <div className="flex flex-1 flex-col gap-6 p-6">
+          <p className="text-center text-gray-600">Track your golf scores with ease</p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               value={name}
