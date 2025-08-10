@@ -31,7 +31,7 @@ export default function AppFooter() {
         aria-label="Toggle theme"
         className="ml-2 cursor-pointer rounded p-1 text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
       >
-        {theme === "light" ? "🌙" : "☀️"}
+        {theme === "light" ? "☀️" : "🌙"}
       </button>
     </footer>
   );
