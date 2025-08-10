@@ -12,6 +12,8 @@ type AppState = {
   setCourse: (course: CourseState | null) => void;
   user: User | null;
   setUser: (user: User | null) => void;
+  theme: "light" | "dark";
+  setTheme: (theme: "light" | "dark") => void;
 };
 
 export const AppStateContext = createContext<AppState | undefined>(undefined);

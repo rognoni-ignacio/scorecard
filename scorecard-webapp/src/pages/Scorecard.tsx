@@ -80,37 +80,37 @@ export default function Scorecard() {
   const relativeScore = hasPar ? totalStrokes - (totalPar ?? 0) : null;
 
   return (
-    <div className="flex h-dvh w-full overflow-hidden bg-gray-50">
-      <div className="mx-auto flex h-full w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg">
-        <div className="flex h-20 flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow">
+    <div className="flex h-dvh w-full overflow-hidden bg-gray-50 dark:bg-gray-950">
+      <div className="mx-auto flex h-full w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900">
+        <div className="flex h-20 flex-shrink-0 items-center justify-between rounded-t-lg bg-white p-4 shadow dark:bg-gray-900">
           <button
-            className="cursor-pointer rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300"
+            className="cursor-pointer rounded-lg bg-gray-200 px-4 py-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
             onClick={handleGoBack}
             aria-label="Back"
           >
             ←
           </button>
-          <h1 className="flex-1 text-center text-2xl font-bold text-gray-900">
+          <h1 className="flex-1 text-center text-2xl font-bold text-gray-900 dark:text-gray-100">
             {course.name}
           </h1>
           {hasPar && totalPar !== null ? (
-            <span className="ml-2 text-sm font-semibold text-blue-600">
+            <span className="ml-2 text-sm font-semibold text-blue-600 dark:text-blue-400">
               Par {totalPar}
             </span>
           ) : (
             <div className="w-12" />
           )}
         </div>
-        <ul className="flex-1 divide-y divide-gray-200 overflow-y-auto overscroll-contain px-4 py-2">
+        <ul className="flex-1 divide-y divide-gray-200 overflow-y-auto overscroll-contain px-4 py-2 dark:divide-gray-700">
           {course.holes.map((hole, i) => (
             <li
               key={hole.number}
               className="flex items-center justify-between py-3"
             >
-              <span className="text-lg font-medium text-gray-700">
+              <span className="text-lg font-medium text-gray-700 dark:text-gray-300">
                 Hole {hole.number}
                 {hasPar && hole.par > 0 && (
-                  <span className="ml-2 text-sm text-gray-500">
+                  <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
                     Par {hole.par}
                   </span>
                 )}
@@ -118,7 +118,7 @@ export default function Scorecard() {
               <div className="flex items-center gap-4">
                 {strokes[i] > 0 && (
                   <button
-                    className="h-10 w-10 cursor-pointer rounded-lg bg-gray-200 transition-colors hover:bg-gray-300"
+                    className="h-10 w-10 cursor-pointer rounded-lg bg-gray-200 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
                     onClick={() => handleMinusClick(i)}
                   >
                     -
@@ -126,7 +126,7 @@ export default function Scorecard() {
                 )}
                 <span>{strokes[i]}</span>
                 <button
-                  className="h-10 w-10 cursor-pointer rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600"
+                  className="h-10 w-10 cursor-pointer rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
                   onClick={() => handlePlusClick(i)}
                 >
                   +
@@ -135,10 +135,10 @@ export default function Scorecard() {
             </li>
           ))}
         </ul>
-        <div className="flex-shrink-0 rounded-b-lg bg-white p-4 shadow">
+        <div className="flex-shrink-0 rounded-b-lg bg-white p-4 shadow dark:bg-gray-900">
           <div className="mb-4 flex items-center justify-between">
-            <span className="text-lg font-semibold text-gray-700">Total</span>
-            <span className="flex items-center gap-2 text-2xl font-bold text-blue-600">
+            <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">Total</span>
+            <span className="flex items-center gap-2 text-2xl font-bold text-blue-600 dark:text-blue-400">
               {totalStrokes}
               {hasPar && relativeScore !== null && (
                 <span
@@ -148,7 +148,7 @@ export default function Scorecard() {
                       ? "text-green-600"
                       : relativeScore > 0
                         ? "text-red-600"
-                        : "text-gray-500")
+                        : "text-gray-500 dark:text-gray-400")
                   }
                 >
                   {relativeScore > 0
@@ -162,7 +162,7 @@ export default function Scorecard() {
           </div>
           <button
             onClick={handleSaveRound}
-            className="w-full cursor-pointer rounded-lg bg-blue-500 py-4 text-xl font-bold text-white shadow transition-colors hover:bg-blue-600 active:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full cursor-pointer rounded-lg bg-blue-500 py-4 text-xl font-bold text-white shadow transition-colors hover:bg-blue-600 active:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800"
             disabled={!isRoundComplete}
           >
             Save round

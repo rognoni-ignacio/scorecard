@@ -35,12 +35,12 @@ export default function PredefinedCoursesSelection() {
   };
 
   if (loading) {
-    return <div className="text-center text-gray-500">Loading courses...</div>;
+    return <div className="text-center text-gray-500 dark:text-gray-400">Loading courses...</div>;
   }
 
   return (
     <div>
-      <h2 className="mb-2 text-center text-lg font-medium text-gray-700">
+      <h2 className="mb-2 text-center text-lg font-medium text-gray-700 dark:text-gray-300">
         Predefined courses
       </h2>
       <div className="space-y-3">
@@ -48,7 +48,7 @@ export default function PredefinedCoursesSelection() {
           <button
             key={course.id}
             onClick={() => handleSelectCourse(course.id)}
-            className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
+            className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-900 dark:text-blue-100 dark:hover:border-blue-600 dark:hover:bg-blue-800"
           >
             {course.name}
           </button>

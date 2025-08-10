@@ -19,13 +19,13 @@ export default function SimpleScorecardSelection() {
       <div className="space-y-3">
         <button
           onClick={() => startSimpleScorecard(9)}
-          className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
+          className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-900 dark:text-blue-100 dark:hover:border-blue-600 dark:hover:bg-blue-800"
         >
           9 Holes
         </button>
         <button
           onClick={() => startSimpleScorecard(18)}
-          className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
+          className="w-full cursor-pointer rounded-lg border-2 border-blue-200 bg-blue-50 px-4 py-3 font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-900 dark:text-blue-100 dark:hover:border-blue-600 dark:hover:bg-blue-800"
         >
           18 Holes
         </button>
