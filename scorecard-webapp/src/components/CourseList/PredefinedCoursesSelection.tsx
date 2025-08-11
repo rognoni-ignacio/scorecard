@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { CourseSummary } from "../../models/CourseSummary";
 import { useAppState } from "../../context/useAppState";
 import { useNavigate } from "react-router";
-import type { Hole } from "../../models/Hole";
+import { getCourses, getCourse } from "../../services/courseService";
 
 export default function PredefinedCoursesSelection() {
   const { setCourse } = useAppState();
@@ -10,24 +10,22 @@ export default function PredefinedCoursesSelection() {
   const [courses, setCourses] = useState<CourseSummary[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Initial fetch for main course list
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/courses`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCourses(data.courses || []);
+    async function fetchCourses() {
+      try {
+        const data = await getCourses();
+        setCourses(data);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      }
+    }
+    fetchCourses();
   }, []);
 
   const handleSelectCourse = async (courseId: number) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/courses/${courseId}`,
-      );
-      const data = await response.json();
-      setCourse({ name: data.name, holes: data.holes as Hole[] });
+      const course = await getCourse(courseId);
+      setCourse(course);
       navigate("/play");
     } catch (error) {
       alert(`Failed to load course data. ${error}`);

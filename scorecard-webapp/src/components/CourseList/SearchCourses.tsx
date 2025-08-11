@@ -1,8 +1,11 @@
 import { useState } from "react";
 import type { CourseSummary } from "../../models/CourseSummary";
 import { useAppState } from "../../context/useAppState";
-import type { Hole } from "../../models/Hole";
 import { useNavigate } from "react-router";
+import {
+  searchExternalCourses,
+  getExternalCourse,
+} from "../../services/courseService";
 
 export default function SearchCourses() {
   const { setCourse } = useAppState();
@@ -12,42 +15,30 @@ export default function SearchCourses() {
   const [searchedCourses, setSearchedCourses] = useState<CourseSummary[]>([]);
   const [noCoursesFound, setNoCoursesFound] = useState(false);
 
-  const searchCoursesAction = (e: React.FormEvent<HTMLFormElement>) => {
+  const searchCoursesAction = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchLoading(true);
-    fetch(
-      `${import.meta.env.VITE_API_URL}/external/courses/search?q=${searchQuery}`,
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setSearchLoading(false);
-        const foundCourses = data.courses || [];
-        if (foundCourses.length > 0) {
-          setSearchedCourses(foundCourses);
-        } else {
-          setSearchedCourses([]);
-          setNoCoursesFound(true);
-        }
-      })
-      .catch(() => {
-        setSearchLoading(false);
-        alert("An error occurred while searching for courses.");
-      });
+    try {
+      const foundCourses = await searchExternalCourses(searchQuery);
+      setSearchLoading(false);
+      if (foundCourses.length > 0) {
+        setSearchedCourses(foundCourses);
+        setNoCoursesFound(false);
+      } else {
+        setSearchedCourses([]);
+        setNoCoursesFound(true);
+      }
+    } catch {
+      setSearchLoading(false);
+      alert("An error occurred while searching for courses.");
+    }
   };
 
   const handleSelectExternalCourse = async (courseId: number) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/external/courses/${courseId}`,
-      );
-      const data = await response.json();
-      console.log(data);
-      if (data.holes) {
-        setCourse({ name: data.name, holes: data.holes as Hole[] });
-        navigate("/play");
-      } else {
-        alert("Course not found!");
-      }
+      const course = await getExternalCourse(courseId);
+      setCourse(course);
+      navigate("/play");
     } catch (error) {
       alert(`Failed to load course data. ${error}`);
     }
