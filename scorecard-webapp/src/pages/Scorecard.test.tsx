@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Scorecard from "./Scorecard";
 import { AppStateContext } from "../context/context";
-import type { CourseState } from "../context/context";
+import type { Course } from "../models/Course";
 import { vi } from "vitest";
 
 vi.mock("react-router", () => ({
@@ -10,7 +10,7 @@ vi.mock("react-router", () => ({
   useBlocker: () => ({ state: "unblocked", proceed: vi.fn(), reset: vi.fn() }),
 }));
 
-function renderScorecard(course: CourseState) {
+function renderScorecard(course: Course) {
   const setCourse = vi.fn();
   const setUser = vi.fn();
   render(
@@ -21,7 +21,7 @@ function renderScorecard(course: CourseState) {
 }
 
 test("allows players to record strokes and enables save when round complete", async () => {
-  const course: CourseState = {
+  const course: Course = {
     name: "Test Course",
     holes: [
       { number: 1, par: 3 },

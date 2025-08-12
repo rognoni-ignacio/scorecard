@@ -1,15 +1,10 @@
 import { createContext } from "react";
-import type { Hole } from "../models/Hole";
 import type { User } from "../models/User";
-
-export interface CourseState {
-  name: string;
-  holes: Hole[];
-}
+import type { Course } from "../models/Course";
 
 type AppState = {
-  course: CourseState | null;
-  setCourse: (course: CourseState | null) => void;
+  course: Course | null;
+  setCourse: (course: Course | null) => void;
   user: User | null;
   setUser: (user: User | null) => void;
   theme: "light" | "dark";
