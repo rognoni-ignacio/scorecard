@@ -16,6 +16,9 @@ dist-ssr
 __pycache__
 scorecard-api/.env
 
+# Database
+*.db
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,45 +1,19 @@
-import os
-import sqlite3
-
-# Default path for SQLite database file
-DB_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "users.db"
-)
+from api import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class User:
-    def __init__(self, id, email, password_hash, name):
-        self.id = id
-        self.email = email
-        self.password_hash = password_hash
-        self.name = name
+class User(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True, index=True, nullable=False)
+    name = db.Column(db.String(120), nullable=False)
+    password_hash = db.Column(db.String(256), nullable=False)
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            "password_hash": self.password_hash,
-            "name": self.name,
-        }
+    def set_password(self, password: str) -> None:
+        self.password_hash = generate_password_hash(password)
 
+    def check_password(self, password: str) -> bool:
+        return check_password_hash(self.password_hash, password)
 
-def create_users_table(db_path: str = DB_PATH) -> None:
-    """Create the users table if it doesn't already exist."""
-    connection = sqlite3.connect(db_path)
-    cursor = connection.cursor()
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
-            name TEXT NOT NULL
-        )
-        """
-    )
-    connection.commit()
-    connection.close()
-
-
-if __name__ == "__main__":
-    create_users_table()
+    def to_dict(self) -> dict:
+        return {"id": self.id, "email": self.email, "name": self.name}
