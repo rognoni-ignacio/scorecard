@@ -2,10 +2,11 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
+
 from .courses import courses_bp
 from .external_courses import external_courses_bp
-
-db = SQLAlchemy()
+from .auth import auth_bp
 
 
 def create_app():
@@ -18,6 +19,7 @@ def create_app():
 
     app.register_blueprint(courses_bp)
     app.register_blueprint(external_courses_bp)
+    app.register_blueprint(auth_bp)
 
     with app.app_context():
         from .models.user import User
