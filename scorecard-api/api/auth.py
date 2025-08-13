@@ -1,5 +1,6 @@
 from sqlite3 import IntegrityError
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 from api import db
 from .models.user import User
@@ -8,7 +9,7 @@ from .models.user import User
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 
-@auth_bp.route("/signup", methods=["POST"])
+@auth_bp.post("/signup")
 def signup():
     data = request.get_json(silent=True) or {}
 
@@ -38,3 +39,33 @@ def signup():
         return jsonify({"error": "email already registered"}), 409
 
     return jsonify(user.to_dict()), 201
+
+
+@auth_bp.post("/login")
+def login():
+    data = request.get_json(silent=True) or {}
+    email = (data.get("email") or "").strip().lower()
+    password = data.get("password") or ""
+
+    if not email or not password:
+        return jsonify({"error": "email and password are required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user or not user.check_password(password):
+        return jsonify({"error": "invalid credentials"}), 401
+
+    access_token = create_access_token(
+        identity=str(user.id),
+        additional_claims={"email": user.email, "name": user.name},
+    )
+    return jsonify({"access_token": access_token, "user": user.to_dict()}), 200
+
+
+@auth_bp.get("/me")
+@jwt_required()
+def me():
+    user_id = get_jwt_identity()
+    user = User.query.get(int(user_id))
+    if not user:
+        return jsonify({"error": "user not found"}), 404
+    return jsonify(user.to_dict()), 200
