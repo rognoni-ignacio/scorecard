@@ -20,7 +20,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///scorecard.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
-    app.config["JWT_SECRET_KEY"] = "461mUZOpXm8T341wzMKYGlJi65dPAM-lEtYBea9D1ndDK9YTn34EiTkzF_0vEJb9XanODZ5_J8sUb_kDEYob2g"
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
     db.init_app(app)
     jwt.init_app(app)
