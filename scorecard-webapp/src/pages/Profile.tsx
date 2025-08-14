@@ -32,6 +32,9 @@ export default function Profile() {
           <p className="mb-2 text-gray-700 dark:text-gray-300">
             <span className="font-semibold">Name:</span> {user.name}
           </p>
+          <p className="mb-2 text-gray-700 dark:text-gray-300">
+            <span className="font-semibold">Email:</span> {user.email}
+          </p>
           <p className="mb-4 text-gray-700 dark:text-gray-300">
             <span className="font-semibold">ID:</span> {user.id}
           </p>

@@ -14,7 +14,18 @@ function renderScorecard(course: Course) {
   const setCourse = vi.fn();
   const setUser = vi.fn();
   render(
-    <AppStateContext.Provider value={{ course, setCourse, user: null, setUser, theme: "light", setTheme: vi.fn() }}>
+    <AppStateContext.Provider
+      value={{
+        course,
+        setCourse,
+        user: null,
+        setUser,
+        token: null,
+        setToken: vi.fn(),
+        theme: "light",
+        setTheme: vi.fn(),
+      }}
+    >
       <Scorecard />
     </AppStateContext.Provider>,
   );

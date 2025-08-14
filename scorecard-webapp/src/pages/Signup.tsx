@@ -2,19 +2,37 @@ import { type FormEvent, useState } from "react";
 import { Link } from "react-router";
 import { useLogin } from "../hooks/useLogin";
 import AppFooter from "../components/AppFooter";
+import { signup as signupService } from "../services/authService";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const login = useLogin();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
-    if (!trimmedName || !trimmedEmail || !password) return;
-    login({ id: crypto.randomUUID(), name: trimmedName });
+    if (!trimmedName || !trimmedEmail || !password) {
+      setError("All fields are required");
+      return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(trimmedEmail)) {
+      setError("Invalid email");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+    try {
+      await signupService({ name: trimmedName, email: trimmedEmail, password });
+      await login(trimmedEmail, password);
+    } catch (err: any) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -50,6 +68,11 @@ export default function Signup() {
               placeholder="Password"
               className="rounded border p-2 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
+            {error && (
+              <p className="text-sm text-red-500" role="alert">
+                {error}
+              </p>
+            )}
             <button
               type="submit"
               className="w-full cursor-pointer rounded-lg bg-blue-500 py-4 text-xl font-bold text-white shadow transition-colors hover:bg-blue-600 active:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800"

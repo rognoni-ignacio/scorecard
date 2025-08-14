@@ -9,6 +9,8 @@ test("renders link to GitHub repository", () => {
       value={{
         user: null,
         setUser: vi.fn(),
+        token: null,
+        setToken: vi.fn(),
         course: null,
         setCourse: vi.fn(),
         theme: "light",

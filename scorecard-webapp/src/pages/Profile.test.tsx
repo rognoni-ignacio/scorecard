@@ -11,15 +11,26 @@ vi.mock("react-router", () => ({
 
 test("shows user info and allows navigation and logout", async () => {
   const setUser = vi.fn();
+  const setToken = vi.fn();
   render(
     <AppStateContext.Provider
-      value={{ user: { id: "123", name: "Alice" }, setUser, course: null, setCourse: vi.fn(), theme: "light", setTheme: vi.fn() }}
+      value={{
+        user: { id: 123, name: "Alice", email: "alice@example.com" },
+        setUser,
+        token: "token",
+        setToken,
+        course: null,
+        setCourse: vi.fn(),
+        theme: "light",
+        setTheme: vi.fn(),
+      }}
     >
       <Profile />
     </AppStateContext.Provider>,
   );
 
-  expect(screen.getByText(/alice/i)).toBeInTheDocument();
+  expect(screen.getByText("Alice")).toBeInTheDocument();
+  expect(screen.getByText(/alice@example.com/i)).toBeInTheDocument();
   expect(screen.getByText(/123/)).toBeInTheDocument();
 
   const user = userEvent.setup();
@@ -28,4 +39,5 @@ test("shows user info and allows navigation and logout", async () => {
 
   await user.click(screen.getByRole("button", { name: /logout/i }));
   expect(setUser).toHaveBeenCalledWith(null);
+  expect(setToken).toHaveBeenCalledWith(null);
 });
