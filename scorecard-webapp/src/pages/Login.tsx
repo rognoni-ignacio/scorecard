@@ -4,15 +4,27 @@ import { useLogin } from "../hooks/useLogin";
 import AppFooter from "../components/AppFooter";
 
 export default function Login() {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const login = useLogin();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const trimmed = name.trim();
-    if (!trimmed || !password) return;
-    login({ id: crypto.randomUUID(), name: trimmed });
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail || !password) {
+      setError("Email and password are required");
+      return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(trimmedEmail)) {
+      setError("Invalid email");
+      return;
+    }
+    try {
+      await login(trimmedEmail, password);
+    } catch (err: any) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -29,9 +41,10 @@ export default function Login() {
           </p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Name"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
               className="rounded border p-2 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
             <input
@@ -41,10 +54,15 @@ export default function Login() {
               placeholder="Password"
               className="rounded border p-2 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
+            {error && (
+              <p className="text-sm text-red-500" role="alert">
+                {error}
+              </p>
+            )}
             <button
               type="submit"
               className="w-full cursor-pointer rounded-lg bg-blue-500 py-4 text-xl font-bold text-white shadow transition-colors hover:bg-blue-600 active:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800"
-              disabled={!name.trim() || !password}
+              disabled={!email.trim() || !password}
             >
               Login
             </button>

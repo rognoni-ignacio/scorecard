@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router";
 import { useAppState } from "../context/useAppState";
-import type { User } from "../models/User";
+import { login as loginService } from "../services/authService";
 
 export function useLogin() {
-  const { setUser } = useAppState();
+  const { setUser, setToken } = useAppState();
   const navigate = useNavigate();
-  return (user: User) => {
+  return async (email: string, password: string) => {
+    const { access_token, user } = await loginService({ email, password });
     setUser(user);
+    setToken(access_token);
     navigate("/");
   };
 }

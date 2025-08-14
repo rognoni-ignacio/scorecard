@@ -11,7 +11,18 @@ vi.mock("react-router", () => ({
 
 test("renders app name and description", () => {
   render(
-    <AppStateContext.Provider value={{ user: null, setUser: vi.fn(), course: null, setCourse: vi.fn(), theme: "light", setTheme: vi.fn() }}>
+    <AppStateContext.Provider
+      value={{
+        user: null,
+        setUser: vi.fn(),
+        token: null,
+        setToken: vi.fn(),
+        course: null,
+        setCourse: vi.fn(),
+        theme: "light",
+        setTheme: vi.fn(),
+      }}
+    >
       <Login />
     </AppStateContext.Provider>,
   );
@@ -22,5 +33,6 @@ test("renders app name and description", () => {
   expect(
     screen.getByText(/track your golf scores with ease/i),
   ).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/email/i)).toBeInTheDocument();
   expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
 });
