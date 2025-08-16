@@ -8,9 +8,10 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 jwt = JWTManager()
 
+from .auth import auth_bp
 from .courses import courses_bp
 from .external_courses import external_courses_bp
-from .auth import auth_bp
+from .rounds import rounds_bp
 
 
 def create_app():
@@ -27,12 +28,14 @@ def create_app():
 
     CORS(app, origins=["http://localhost:5173", "https://rognoni-ignacio.github.io"])
 
+    app.register_blueprint(auth_bp)
     app.register_blueprint(courses_bp)
     app.register_blueprint(external_courses_bp)
-    app.register_blueprint(auth_bp)
+    app.register_blueprint(rounds_bp)
 
     with app.app_context():
         from .models.user import User
+        from .models.round import Round
 
         db.create_all()
 
