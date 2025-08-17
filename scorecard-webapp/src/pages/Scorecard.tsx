@@ -65,7 +65,9 @@ export default function Scorecard() {
   };
 
   const handleSaveRound = async () => {
-    if (!course) return;
+    if (!course) {
+      return;
+    }
     if (!token) {
       alert("You must be logged in to save a round.");
       return;
