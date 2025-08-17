@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 
+# Global extensions (not bound to app yet)
 db = SQLAlchemy()
 jwt = JWTManager()
 
@@ -12,29 +13,20 @@ jwt = JWTManager()
 def create_app():
     load_dotenv()
 
-    SERVERLESS = os.getenv("SERVERLESS_ENV", "").lower() == "true"
-    app = Flask(__name__, instance_path="/tmp" if SERVERLESS else None)
+    app = Flask(__name__)
 
-    database_url = os.getenv("DATABASE_URL")
-    if not database_url:
-        database_url = (
-            "sqlite:////tmp/scorecard.db" if SERVERLESS else "sqlite:///scorecard.db"
-        )
+    # --- Config ---
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///scorecard.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
-    app.config.update(
-        SQLALCHEMY_DATABASE_URI=database_url,
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        SECRET_KEY=os.getenv("SECRET_KEY", "dev-only"),
-        JWT_SECRET_KEY=os.getenv("JWT_SECRET_KEY", "dev-only-jwt"),
-    )
-
+    # --- Init extensions ---
     db.init_app(app)
     jwt.init_app(app)
     CORS(app, origins=["http://localhost:5173", "https://rognoni-ignacio.github.io"])
 
-    from .models.user import User
-    from .models.round import Round
-
+    # --- Register blueprints ---
     from .auth import auth_bp
     from .courses import courses_bp
     from .external_courses import external_courses_bp
@@ -45,11 +37,15 @@ def create_app():
     app.register_blueprint(external_courses_bp)
     app.register_blueprint(rounds_bp)
 
-    if database_url.startswith("sqlite"):
-        with app.app_context():
-            db.create_all()
+    # --- Import models and create tables ---
+    with app.app_context():
+        from .models.user import User
+        from .models.round import Round
+
+        db.create_all()
 
     return app
 
 
+# WSGI entrypoint
 app = create_app()
