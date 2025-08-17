@@ -16,14 +16,11 @@ vi.mock("../services/authService", () => ({
 
 test("shows user info and allows navigation and logout", async () => {
   const setUser = vi.fn();
-  const setToken = vi.fn();
   render(
     <AppStateContext.Provider
       value={{
         user: { id: 123, name: "Alice", email: "alice@example.com" },
         setUser,
-        token: "token",
-        setToken,
         course: null,
         setCourse: vi.fn(),
         theme: "light",
@@ -45,5 +42,4 @@ test("shows user info and allows navigation and logout", async () => {
   await user.click(screen.getByRole("button", { name: /logout/i }));
   expect(logout).toHaveBeenCalled();
   expect(setUser).toHaveBeenCalledWith(null);
-  expect(setToken).toHaveBeenCalledWith(null);
 });

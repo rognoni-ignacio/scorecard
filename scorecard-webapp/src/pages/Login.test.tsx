@@ -15,8 +15,6 @@ test("renders app name and description", () => {
       value={{
         user: null,
         setUser: vi.fn(),
-        token: null,
-        setToken: vi.fn(),
         course: null,
         setCourse: vi.fn(),
         theme: "light",

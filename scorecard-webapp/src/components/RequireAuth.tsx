@@ -3,12 +3,12 @@ import { Navigate } from "react-router";
 import { useAppState } from "../context/useAppState";
 
 export default function RequireAuth({ children }: PropsWithChildren) {
-  const { user, token } = useAppState();
-  if (!user && !token) {
-    return <Navigate to="/login" replace />;
-  }
-  if (!user && token) {
+  const { user } = useAppState();
+  if (user === undefined) {
     return null;
+  }
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
   return children;
 }

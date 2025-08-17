@@ -22,7 +22,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
-    app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]
+    app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
     app.config["JWT_COOKIE_CSRF_PROTECT"] = False
     app.config["JWT_REFRESH_COOKIE_PATH"] = "/api/auth/refresh"
     app.config["JWT_COOKIE_SAMESITE"] = "Strict"
@@ -30,7 +30,11 @@ def create_app():
     db.init_app(app)
     jwt.init_app(app)
 
-    CORS(app, origins=["http://localhost:5173", "https://rognoni-ignacio.github.io"])
+    CORS(
+        app,
+        origins=["http://localhost:5173", "https://rognoni-ignacio.github.io"],
+        supports_credentials=True,
+    )
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(courses_bp)

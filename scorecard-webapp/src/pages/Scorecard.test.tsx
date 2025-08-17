@@ -20,8 +20,6 @@ function renderScorecard(course: Course) {
         setCourse,
         user: null,
         setUser,
-        token: null,
-        setToken: vi.fn(),
         theme: "light",
         setTheme: vi.fn(),
       }}

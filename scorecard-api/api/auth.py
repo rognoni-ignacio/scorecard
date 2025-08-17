@@ -70,14 +70,14 @@ def login():
     refresh_token = create_refresh_token(
         identity=str(user.id), additional_claims=additional_claims
     )
-    response = jsonify({"access_token": access_token, "user": user.to_dict()})
+    response = jsonify({"user": user.to_dict()})
     set_access_cookies(response, access_token)
     set_refresh_cookies(response, refresh_token)
     return response, 200
 
 
 @auth_bp.get("/me")
-@jwt_required()
+@jwt_required(locations=["cookies"])
 def me():
     user_id = get_jwt_identity()
     user = User.query.get(int(user_id))
@@ -93,7 +93,7 @@ def refresh():
     identity = get_jwt_identity()
     access_token = create_access_token(identity=identity, additional_claims=claims)
     refresh_token = create_refresh_token(identity=identity, additional_claims=claims)
-    response = jsonify({"access_token": access_token})
+    response = jsonify({"message": "token refreshed"})
     set_access_cookies(response, access_token)
     set_refresh_cookies(response, refresh_token)
     return response, 200

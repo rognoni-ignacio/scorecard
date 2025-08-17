@@ -21,7 +21,7 @@ def create_user(client, email):
     assert response.status_code == 201
 
 
-def test_login_sets_refresh_cookie_and_refresh_returns_token(client):
+def test_refresh_cookie_flow(client):
     email = f"{uuid.uuid4()}@example.com"
     create_user(client, email)
     login_resp = client.post(
@@ -31,12 +31,10 @@ def test_login_sets_refresh_cookie_and_refresh_returns_token(client):
     cookies = login_resp.headers.getlist("Set-Cookie")
     assert any("refresh_token_cookie=" in c for c in cookies)
     assert any("access_token_cookie=" in c for c in cookies)
-    access_token = login_resp.get_json()["access_token"]
-    assert access_token
+    assert "user" in login_resp.get_json()
 
     refresh_resp = client.post("/api/auth/refresh")
     assert refresh_resp.status_code == 200
-    assert "access_token" in refresh_resp.get_json()
     cookies = refresh_resp.headers.getlist("Set-Cookie")
     assert any("refresh_token_cookie=" in c for c in cookies)
     assert any("access_token_cookie=" in c for c in cookies)

@@ -5,7 +5,7 @@ import { saveRound } from "../services/roundService";
 
 export default function Scorecard() {
   const navigate = useNavigate();
-  const { course, token } = useAppState();
+  const { course, user } = useAppState();
   const [strokes, setStrokes] = useState<number[]>(
     Array(course?.holes.length ?? 0).fill(0),
   );
@@ -68,7 +68,7 @@ export default function Scorecard() {
     if (!course) {
       return;
     }
-    if (!token) {
+    if (!user) {
       alert("You must be logged in to save a round.");
       return;
     }
@@ -78,13 +78,10 @@ export default function Scorecard() {
       strokes: strokes[i],
     }));
     try {
-      await saveRound(
-        {
-          name: course.name,
-          holes,
-        },
-        token,
-      );
+      await saveRound({
+        name: course.name,
+        holes,
+      });
       alert("Round saved!");
     } catch (error) {
       alert(`Failed to save round. ${error}`);

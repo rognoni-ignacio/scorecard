@@ -1,10 +1,13 @@
 import type { User } from "../models/User";
-import type { LoginRequest, SignupRequest, AuthResponse } from "../models/Auth";
+import type { LoginRequest, SignupRequest } from "../models/Auth";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_URL}${endpoint}`, options);
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    credentials: "include",
+    ...options,
+  });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
     throw new Error((data as { error?: string }).error || "Request failed");
@@ -20,38 +23,27 @@ export async function signup(data: SignupRequest): Promise<User> {
   });
 }
 
-export async function login(data: LoginRequest): Promise<AuthResponse> {
-  return request<AuthResponse>("/auth/login", {
+export async function login(data: LoginRequest): Promise<User> {
+  const { user } = await request<{ user: User }>("/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-    credentials: "include",
   });
+  return user;
 }
 
-interface RefreshResponse {
-  access_token: string;
-}
-
-export async function refresh(): Promise<string> {
-  const data = await request<RefreshResponse>("/auth/refresh", {
+export async function refresh(): Promise<void> {
+  await request<unknown>("/auth/refresh", {
     method: "POST",
-    credentials: "include",
   });
-  return data.access_token;
 }
 
-export async function getMe(token: string): Promise<User> {
-  return request<User>("/auth/me", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export async function getMe(): Promise<User> {
+  return request<User>("/auth/me");
 }
 
 export async function logout(): Promise<void> {
   await request<unknown>("/auth/logout", {
     method: "POST",
-    credentials: "include",
   });
 }

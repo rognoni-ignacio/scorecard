@@ -8,8 +8,7 @@ import { getMe, refresh } from "../services/authService";
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const [course, setCourse] = useState<Course | null>(null);
-  const [token, setToken] = useLocalStorage<string | null>("token", null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(undefined);
   const [theme, setTheme] = useLocalStorage<"light" | "dark">("theme", "light");
 
   useEffect(() => {
@@ -17,22 +16,22 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   useEffect(() => {
-    if (token) {
-      getMe(token)
-        .then(setUser)
-        .catch(async () => {
-          try {
-            const newToken = await refresh();
-            setToken(newToken);
-          } catch {
-            setToken(null);
-            setUser(null);
-          }
-        });
-    } else {
-      setUser(null);
-    }
-  }, [token, setToken]);
+    const loadUser = async () => {
+      try {
+        const me = await getMe();
+        setUser(me);
+      } catch {
+        try {
+          await refresh();
+          const me = await getMe();
+          setUser(me);
+        } catch {
+          setUser(null);
+        }
+      }
+    };
+    loadUser();
+  }, []);
 
   return (
     <AppStateContext.Provider
@@ -41,8 +40,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         setCourse,
         user,
         setUser,
-        token,
-        setToken,
         theme,
         setTheme,
       }}

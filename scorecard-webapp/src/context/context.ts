@@ -5,10 +5,8 @@ import type { Course } from "../models/Course";
 type AppState = {
   course: Course | null;
   setCourse: (course: Course | null) => void;
-  user: User | null;
+  user: User | null | undefined;
   setUser: (user: User | null) => void;
-  token: string | null;
-  setToken: (token: string | null) => void;
   theme: "light" | "dark";
   setTheme: (theme: "light" | "dark") => void;
 };
