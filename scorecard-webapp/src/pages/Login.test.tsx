@@ -17,6 +17,8 @@ test("renders app name and description", () => {
         setUser: vi.fn(),
         token: null,
         setToken: vi.fn(),
+        refreshToken: null,
+        setRefreshToken: vi.fn(),
         course: null,
         setCourse: vi.fn(),
         theme: "light",

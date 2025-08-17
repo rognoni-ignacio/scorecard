@@ -19,6 +19,8 @@ test("shows user info and allows navigation and logout", async () => {
         setUser,
         token: "token",
         setToken,
+        refreshToken: "refresh",
+        setRefreshToken: vi.fn(),
         course: null,
         setCourse: vi.fn(),
         theme: "light",

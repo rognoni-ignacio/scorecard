@@ -1,6 +1,12 @@
 from sqlite3 import IntegrityError
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token,
+    get_jwt,
+    get_jwt_identity,
+    jwt_required,
+)
 
 from api import db
 from .models.user import User
@@ -54,11 +60,13 @@ def login():
     if not user or not user.check_password(password):
         return jsonify({"error": "invalid credentials"}), 401
 
-    access_token = create_access_token(
-        identity=str(user.id),
-        additional_claims={"email": user.email, "name": user.name},
+    additional_claims = {"email": user.email, "name": user.name}
+    access_token = create_access_token(identity=str(user.id), additional_claims=additional_claims)
+    refresh_token = create_refresh_token(identity=str(user.id), additional_claims=additional_claims)
+    return (
+        jsonify({"access_token": access_token, "refresh_token": refresh_token, "user": user.to_dict()}),
+        200,
     )
-    return jsonify({"access_token": access_token, "user": user.to_dict()}), 200
 
 
 @auth_bp.get("/me")
@@ -69,3 +77,12 @@ def me():
     if not user:
         return jsonify({"error": "user not found"}), 404
     return jsonify(user.to_dict()), 200
+
+
+@auth_bp.post("/refresh")
+@jwt_required(refresh=True)
+def refresh():
+    claims = get_jwt()
+    identity = get_jwt_identity()
+    access_token = create_access_token(identity=identity, additional_claims={"email": claims["email"], "name": claims["name"]})
+    return jsonify({"access_token": access_token}), 200

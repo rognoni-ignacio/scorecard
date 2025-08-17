@@ -28,6 +28,20 @@ export async function login(data: LoginRequest): Promise<AuthResponse> {
   });
 }
 
+interface RefreshResponse {
+  access_token: string;
+}
+
+export async function refresh(token: string): Promise<string> {
+  const data = await request<RefreshResponse>("/auth/refresh", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data.access_token;
+}
+
 export async function getMe(token: string): Promise<User> {
   return request<User>("/auth/me", {
     headers: {

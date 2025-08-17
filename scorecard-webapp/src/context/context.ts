@@ -9,6 +9,8 @@ type AppState = {
   setUser: (user: User | null) => void;
   token: string | null;
   setToken: (token: string | null) => void;
+  refreshToken: string | null;
+  setRefreshToken: (token: string | null) => void;
   theme: "light" | "dark";
   setTheme: (theme: "light" | "dark") => void;
 };
