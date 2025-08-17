@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAppState } from "../context/useAppState";
 import { useBlocker, useNavigate } from "react-router";
+import { saveRound } from "../services/roundService";
 
 export default function Scorecard() {
   const navigate = useNavigate();
-  const { course } = useAppState();
+  const { course, token } = useAppState();
   const [strokes, setStrokes] = useState<number[]>(
     Array(course?.holes.length ?? 0).fill(0),
   );
@@ -64,7 +65,28 @@ export default function Scorecard() {
   };
 
   const handleSaveRound = async () => {
-    alert("Feature to be added...");
+    if (!course) return;
+    if (!token) {
+      alert("You must be logged in to save a round.");
+      return;
+    }
+    const holes = course.holes.map((hole, i) => ({
+      number: hole.number,
+      par: hole.par,
+      strokes: strokes[i],
+    }));
+    try {
+      await saveRound(
+        {
+          name: course.name,
+          holes,
+        },
+        token,
+      );
+      alert("Round saved!");
+    } catch (error) {
+      alert(`Failed to save round. ${error}`);
+    }
   };
 
   const isRoundComplete = strokes.every((stroke) => stroke > 0);
