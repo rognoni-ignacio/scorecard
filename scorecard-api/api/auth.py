@@ -3,10 +3,12 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
-    decode_token,
     get_jwt,
     get_jwt_identity,
     jwt_required,
+    set_access_cookies,
+    set_refresh_cookies,
+    unset_jwt_cookies,
 )
 
 from api import db
@@ -69,13 +71,8 @@ def login():
         identity=str(user.id), additional_claims=additional_claims
     )
     response = jsonify({"access_token": access_token, "user": user.to_dict()})
-    response.set_cookie(
-        "refresh_token",
-        refresh_token,
-        httponly=True,
-        samesite="strict",
-        path="/api/auth/refresh",
-    )
+    set_access_cookies(response, access_token)
+    set_refresh_cookies(response, refresh_token)
     return response, 200
 
 
@@ -90,31 +87,20 @@ def me():
 
 
 @auth_bp.post("/refresh")
+@jwt_required(refresh=True, locations=["cookies"])
 def refresh():
-    refresh_token = request.cookies.get("refresh_token")
-    if not refresh_token:
-        return jsonify({"error": "missing refresh token"}), 401
-    try:
-        decoded = decode_token(refresh_token)
-    except Exception:
-        return jsonify({"error": "invalid refresh token"}), 401
-    identity = decoded["sub"]
-    claims = decoded.get("claims", {})
+    claims = get_jwt()
+    identity = get_jwt_identity()
     access_token = create_access_token(identity=identity, additional_claims=claims)
-    new_refresh = create_refresh_token(identity=identity, additional_claims=claims)
+    refresh_token = create_refresh_token(identity=identity, additional_claims=claims)
     response = jsonify({"access_token": access_token})
-    response.set_cookie(
-        "refresh_token",
-        new_refresh,
-        httponly=True,
-        samesite="strict",
-        path="/api/auth/refresh",
-    )
+    set_access_cookies(response, access_token)
+    set_refresh_cookies(response, refresh_token)
     return response, 200
 
 
 @auth_bp.post("/logout")
 def logout():
     response = jsonify({"message": "logout successful"})
-    response.delete_cookie("refresh_token", path="/api/auth/refresh")
+    unset_jwt_cookies(response)
     return response, 200

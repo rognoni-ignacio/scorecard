@@ -28,15 +28,21 @@ def test_login_sets_refresh_cookie_and_refresh_returns_token(client):
         "/api/auth/login", json={"email": email, "password": "password123"}
     )
     assert login_resp.status_code == 200
-    assert "refresh_token=" in login_resp.headers.get("Set-Cookie", "")
+    cookies = login_resp.headers.getlist("Set-Cookie")
+    assert any("refresh_token_cookie=" in c for c in cookies)
+    assert any("access_token_cookie=" in c for c in cookies)
     access_token = login_resp.get_json()["access_token"]
     assert access_token
 
     refresh_resp = client.post("/api/auth/refresh")
     assert refresh_resp.status_code == 200
     assert "access_token" in refresh_resp.get_json()
-    assert "refresh_token=" in refresh_resp.headers.get("Set-Cookie", "")
+    cookies = refresh_resp.headers.getlist("Set-Cookie")
+    assert any("refresh_token_cookie=" in c for c in cookies)
+    assert any("access_token_cookie=" in c for c in cookies)
 
     logout_resp = client.post("/api/auth/logout")
     assert logout_resp.status_code == 200
-    assert "refresh_token=" in logout_resp.headers.get("Set-Cookie", "")
+    cookies = logout_resp.headers.getlist("Set-Cookie")
+    assert any(c.startswith("refresh_token_cookie=;") for c in cookies)
+    assert any(c.startswith("access_token_cookie=;") for c in cookies)
