@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
+    decode_token,
     get_jwt,
     get_jwt_identity,
     jwt_required,
@@ -61,12 +62,21 @@ def login():
         return jsonify({"error": "invalid credentials"}), 401
 
     additional_claims = {"email": user.email, "name": user.name}
-    access_token = create_access_token(identity=str(user.id), additional_claims=additional_claims)
-    refresh_token = create_refresh_token(identity=str(user.id), additional_claims=additional_claims)
-    return (
-        jsonify({"access_token": access_token, "refresh_token": refresh_token, "user": user.to_dict()}),
-        200,
+    access_token = create_access_token(
+        identity=str(user.id), additional_claims=additional_claims
     )
+    refresh_token = create_refresh_token(
+        identity=str(user.id), additional_claims=additional_claims
+    )
+    response = jsonify({"access_token": access_token, "user": user.to_dict()})
+    response.set_cookie(
+        "refresh_token",
+        refresh_token,
+        httponly=True,
+        samesite="strict",
+        path="/api/auth/refresh",
+    )
+    return response, 200
 
 
 @auth_bp.get("/me")
@@ -80,9 +90,31 @@ def me():
 
 
 @auth_bp.post("/refresh")
-@jwt_required(refresh=True)
 def refresh():
-    claims = get_jwt()
-    identity = get_jwt_identity()
-    access_token = create_access_token(identity=identity, additional_claims={"email": claims["email"], "name": claims["name"]})
-    return jsonify({"access_token": access_token}), 200
+    refresh_token = request.cookies.get("refresh_token")
+    if not refresh_token:
+        return jsonify({"error": "missing refresh token"}), 401
+    try:
+        decoded = decode_token(refresh_token)
+    except Exception:
+        return jsonify({"error": "invalid refresh token"}), 401
+    identity = decoded["sub"]
+    claims = decoded.get("claims", {})
+    access_token = create_access_token(identity=identity, additional_claims=claims)
+    new_refresh = create_refresh_token(identity=identity, additional_claims=claims)
+    response = jsonify({"access_token": access_token})
+    response.set_cookie(
+        "refresh_token",
+        new_refresh,
+        httponly=True,
+        samesite="strict",
+        path="/api/auth/refresh",
+    )
+    return response, 200
+
+
+@auth_bp.post("/logout")
+def logout():
+    response = jsonify({"message": "logout successful"})
+    response.delete_cookie("refresh_token", path="/api/auth/refresh")
+    return response, 200

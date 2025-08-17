@@ -9,7 +9,6 @@ import { getMe, refresh } from "../services/authService";
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const [course, setCourse] = useState<Course | null>(null);
   const [token, setToken] = useLocalStorage<string | null>("token", null);
-  const [refreshToken, setRefreshToken] = useLocalStorage<string | null>("refresh_token", null);
   const [user, setUser] = useState<User | null>(null);
   const [theme, setTheme] = useLocalStorage<"light" | "dark">("theme", "light");
 
@@ -22,16 +21,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       getMe(token)
         .then(setUser)
         .catch(async () => {
-          if (refreshToken) {
-            try {
-              const newToken = await refresh(refreshToken);
-              setToken(newToken);
-            } catch {
-              setToken(null);
-              setRefreshToken(null);
-              setUser(null);
-            }
-          } else {
+          try {
+            const newToken = await refresh();
+            setToken(newToken);
+          } catch {
             setToken(null);
             setUser(null);
           }
@@ -39,7 +32,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     } else {
       setUser(null);
     }
-  }, [token, refreshToken, setToken, setRefreshToken]);
+  }, [token, setToken]);
 
   return (
     <AppStateContext.Provider
@@ -50,8 +43,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         setUser,
         token,
         setToken,
-        refreshToken,
-        setRefreshToken,
         theme,
         setTheme,
       }}

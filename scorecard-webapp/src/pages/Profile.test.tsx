@@ -3,10 +3,15 @@ import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 import { AppStateContext } from "../context/context";
 import Profile from "./Profile";
+import { logout } from "../services/authService";
 
 const mockNavigate = vi.fn();
 vi.mock("react-router", () => ({
   useNavigate: () => mockNavigate,
+}));
+
+vi.mock("../services/authService", () => ({
+  logout: vi.fn().mockResolvedValue(undefined),
 }));
 
 test("shows user info and allows navigation and logout", async () => {
@@ -19,8 +24,6 @@ test("shows user info and allows navigation and logout", async () => {
         setUser,
         token: "token",
         setToken,
-        refreshToken: "refresh",
-        setRefreshToken: vi.fn(),
         course: null,
         setCourse: vi.fn(),
         theme: "light",
@@ -40,6 +43,7 @@ test("shows user info and allows navigation and logout", async () => {
   expect(mockNavigate).toHaveBeenCalledWith("/");
 
   await user.click(screen.getByRole("button", { name: /logout/i }));
+  expect(logout).toHaveBeenCalled();
   expect(setUser).toHaveBeenCalledWith(null);
   expect(setToken).toHaveBeenCalledWith(null);
 });

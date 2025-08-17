@@ -25,6 +25,7 @@ export async function login(data: LoginRequest): Promise<AuthResponse> {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
+    credentials: "include",
   });
 }
 
@@ -32,12 +33,10 @@ interface RefreshResponse {
   access_token: string;
 }
 
-export async function refresh(token: string): Promise<string> {
+export async function refresh(): Promise<string> {
   const data = await request<RefreshResponse>("/auth/refresh", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: "include",
   });
   return data.access_token;
 }
@@ -47,5 +46,12 @@ export async function getMe(token: string): Promise<User> {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  });
+}
+
+export async function logout(): Promise<void> {
+  await request<unknown>("/auth/logout", {
+    method: "POST",
+    credentials: "include",
   });
 }

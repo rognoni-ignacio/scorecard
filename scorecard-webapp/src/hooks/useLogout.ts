@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router";
 import { useAppState } from "../context/useAppState";
+import { logout as logoutService } from "../services/authService";
 
 export function useLogout() {
-  const { setUser, setToken, setRefreshToken } = useAppState();
+  const { setUser, setToken } = useAppState();
   const navigate = useNavigate();
-  return () => {
+  return async () => {
+    await logoutService();
     setUser(null);
     setToken(null);
-    setRefreshToken(null);
     navigate("/login");
   };
 }

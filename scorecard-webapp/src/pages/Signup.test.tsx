@@ -17,8 +17,6 @@ test("renders signup form", () => {
         setUser: vi.fn(),
         token: null,
         setToken: vi.fn(),
-        refreshToken: null,
-        setRefreshToken: vi.fn(),
         course: null,
         setCourse: vi.fn(),
         theme: "light",
