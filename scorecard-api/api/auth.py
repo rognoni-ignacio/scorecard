@@ -1,8 +1,8 @@
-from sqlite3 import IntegrityError
+from sqlalchemy.exc import IntegrityError
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
-from api import db
+from . import db
 from .models.user import User
 
 

@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
-from api import db
+from . import db
 from .models.round import Round
 
 rounds_bp = Blueprint("rounds", __name__, url_prefix="/api/rounds")
